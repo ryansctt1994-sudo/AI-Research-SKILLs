@@ -5,6 +5,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { CATEGORIES, INDIVIDUAL_SKILLS, QUICK_START_SKILLS, getTotalSkillCount } from '../src/prompts.js';
+import { showWelcome } from '../src/ascii.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const skillFile = (path) => join(root, path, 'SKILL.md');
@@ -48,4 +49,19 @@ test('marketplace paths match all 83 catalog skills', () => {
       .map((entry) => `${id}/${entry.name}`);
   });
   assert.deepEqual(listed.sort(), actual.sort());
+});
+
+test('welcome screen default uses the real shipped catalog total', () => {
+  const originalClear = console.clear;
+  const originalLog = console.log;
+  const captured = [];
+  console.clear = () => {};
+  console.log = (line = '') => captured.push(String(line));
+  try {
+    showWelcome();
+  } finally {
+    console.clear = originalClear;
+    console.log = originalLog;
+  }
+  assert.ok(captured.some((line) => line.includes('83 skills')), 'default banner reports real count');
 });
