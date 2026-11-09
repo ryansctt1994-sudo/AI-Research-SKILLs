@@ -1,7 +1,7 @@
 ---
 name: model-merging
 description: Merge multiple fine-tuned models using mergekit to combine capabilities without retraining. Use when creating specialized models by blending domain-specific expertise (math + coding + chat), improving performance beyond single models, or experimenting rapidly with model variants. Covers SLERP, TIES-Merging, DARE, Task Arithmetic, linear merging, and production deployment strategies.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Emerging Techniques, Model Merging, Mergekit, SLERP, TIES, DARE, Task Arithmetic, Model Fusion, No Retraining, Multi-Capability, Arcee AI]
@@ -283,57 +283,7 @@ dtype: bfloat16
 
 ## Advanced Patterns
 
-### Layer-wise Merging
-
-```yaml
-# Different models for different layers
-merge_method: passthrough
-slices:
-  - sources:
-      - model: mistralai/Mistral-7B-v0.1
-        layer_range: [0, 16]   # First half
-  - sources:
-      - model: teknium/OpenHermes-2.5-Mistral-7B
-        layer_range: [16, 32]  # Second half
-dtype: bfloat16
-```
-
-### MoE from Merged Models
-
-```yaml
-# Create Mixture of Experts
-merge_method: moe
-base_model: mistralai/Mistral-7B-v0.1
-experts:
-  - source_model: WizardLM/WizardMath-7B-V1.1
-    positive_prompts:
-      - "math"
-      - "calculate"
-  - source_model: teknium/OpenHermes-2.5-Mistral-7B
-    positive_prompts:
-      - "chat"
-      - "conversation"
-  - source_model: ajibawa-2023/Code-Mistral-7B
-    positive_prompts:
-      - "code"
-      - "python"
-dtype: bfloat16
-```
-
-### Tokenizer Merging
-
-```yaml
-merge_method: linear
-models:
-  - model: mistralai/Mistral-7B-v0.1
-  - model: custom/specialized-model
-
-tokenizer:
-  source: "union"  # Combine vocabularies from both models
-  tokens:
-    <|special_token|>:
-      source: "custom/specialized-model"
-```
+See [references/advanced-patterns.md](references/advanced-patterns.md) for: Layer-wise Merging; MoE from Merged Models; Tokenizer Merging.
 
 ## Best Practices
 
@@ -460,29 +410,7 @@ for task, prompt in test_prompts.items():
 
 ## Production Deployment
 
-### Save and Upload
-
-```python
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-# Load merged model
-model = AutoModelForCausalLM.from_pretrained("./merged-model")
-tokenizer = AutoTokenizer.from_pretrained("./merged-model")
-
-# Upload to HuggingFace Hub
-model.push_to_hub("username/my-merged-model")
-tokenizer.push_to_hub("username/my-merged-model")
-```
-
-### Quantize Merged Model
-
-```bash
-# Quantize with GGUF
-python convert.py ./merged-model --outtype f16 --outfile merged-model.gguf
-
-# Quantize with GPTQ
-python quantize_gptq.py ./merged-model --bits 4 --group_size 128
-```
+See [references/deployment.md](references/deployment.md) for: Save and Upload; Quantize Merged Model.
 
 ## Common Pitfalls
 

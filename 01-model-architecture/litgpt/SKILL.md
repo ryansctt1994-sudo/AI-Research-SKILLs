@@ -1,7 +1,7 @@
 ---
 name: implementing-llms-litgpt
 description: Implements and trains LLMs using Lightning AI's LitGPT with 20+ pretrained architectures (Llama, Gemma, Phi, Qwen, Mistral). Use when need clean model implementations, educational understanding of architectures, or production fine-tuning with LoRA/QLoRA. Single-file implementations, no abstraction layers.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Model Architecture, LitGPT, Lightning AI, LLM Implementation, LoRA, QLoRA, Fine-Tuning, Llama, Gemma, Phi, Mistral, Educational]
@@ -46,7 +46,7 @@ litgpt download list
 
 Copy this checklist:
 
-```
+```text
 Fine-Tuning Setup:
 - [ ] Step 1: Download pretrained model
 - [ ] Step 2: Prepare dataset
@@ -133,7 +133,7 @@ tensorboard --logdir out/finetune/lightning_logs
 
 Most memory-efficient option.
 
-```
+```text
 LoRA Training:
 - [ ] Step 1: Choose base model
 - [ ] Step 2: Configure LoRA parameters
@@ -209,7 +209,7 @@ llm = LLM.load("out/phi2-merged")
 
 Train new model on your domain data.
 
-```
+```text
 Pretraining:
 - [ ] Step 1: Prepare pretraining dataset
 - [ ] Step 2: Configure model architecture
@@ -286,7 +286,7 @@ litgpt pretrain \
 
 Export LitGPT models for production.
 
-```
+```text
 Model Deployment:
 - [ ] Step 1: Test inference locally
 - [ ] Step 2: Quantize model (optional)

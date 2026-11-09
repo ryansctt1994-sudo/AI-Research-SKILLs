@@ -714,3 +714,60 @@ device_map = infer_auto_device_map(
 # Dispatch model
 pipe.unet = dispatch_model(pipe.unet, device_map=device_map)
 ```
+
+## Model variants
+
+### Loading different precisions
+
+```python
+# FP16 (recommended for GPU)
+pipe = DiffusionPipeline.from_pretrained(
+    "model-id",
+    torch_dtype=torch.float16,
+    variant="fp16"
+)
+
+# BF16 (better precision, requires Ampere+ GPU)
+pipe = DiffusionPipeline.from_pretrained(
+    "model-id",
+    torch_dtype=torch.bfloat16
+)
+```
+
+### Loading specific components
+
+```python
+from diffusers import UNet2DConditionModel, AutoencoderKL
+
+# Load custom VAE
+vae = AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse")
+
+# Use with pipeline
+pipe = DiffusionPipeline.from_pretrained(
+    "stable-diffusion-v1-5/stable-diffusion-v1-5",
+    vae=vae,
+    torch_dtype=torch.float16
+)
+```
+
+## Batch generation
+
+Generate multiple images efficiently:
+
+```python
+# Multiple prompts
+prompts = [
+    "A cat playing piano",
+    "A dog reading a book",
+    "A bird painting a picture"
+]
+
+images = pipe(prompts, num_inference_steps=30).images
+
+# Multiple images per prompt
+images = pipe(
+    "A beautiful sunset",
+    num_images_per_prompt=4,
+    num_inference_steps=30
+).images
+```

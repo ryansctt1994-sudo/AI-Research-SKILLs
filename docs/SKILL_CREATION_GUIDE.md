@@ -642,4 +642,4 @@ Based on testing:
 
 - **Anthropic Official Best Practices**: [anthropic_official_docs/best_practices.md](anthropic_official_docs/best_practices.md)
 - **Skill Template**: [SKILL_TEMPLATE.md](SKILL_TEMPLATE.md)
-- **Contributing Guide**: [CONTRIBUTING.md](CONTRIBUTING.md)
+- **Contributing Guide**: [CONTRIBUTING.md](../CONTRIBUTING.md)

@@ -1,7 +1,7 @@
 ---
 name: ml-paper-writing
 description: Write publication-ready ML/AI papers for NeurIPS, ICML, ICLR, ACL, AAAI, COLM. Use when drafting papers from research repos, structuring arguments, verifying citations, or preparing camera-ready submissions. Includes LaTeX templates, reviewer guidelines, and citation verification workflows.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Academic Writing, NeurIPS, ICML, ICLR, ACL, AAAI, COLM, LaTeX, Paper Writing, Citations, Research]
@@ -89,7 +89,7 @@ Then verify results with Semantic Scholar API and fetch BibTeX via DOI.
 
 When beginning paper writing, start by understanding the project:
 
-```
+```text
 Project Understanding:
 - [ ] Step 1: Explore the repository structure
 - [ ] Step 2: Read README, existing docs, and key results
@@ -142,7 +142,7 @@ Before writing, explicitly confirm with the scientist:
 
 Use web search to find relevant papers:
 
-```
+```text
 Search queries to try:
 - "[main technique] + [application domain]"
 - "[baseline method] comparison"
@@ -245,7 +245,7 @@ Every successful ML paper centers on what Neel Nanda calls "the narrative": a sh
 
 Copy this checklist and track progress. **Each step involves drafting → feedback → revision:**
 
-```
+```text
 Paper Writing Progress:
 - [ ] Step 1: Define the one-sentence contribution (with scientist)
 - [ ] Step 2: Draft Figure 1 → get feedback → revise
@@ -282,7 +282,7 @@ Figure 1 deserves special attention—many readers skip directly to it.
 
 From Sebastian Farquhar (DeepMind):
 
-```
+```text
 1. What you achieved: "We introduce...", "We prove...", "We demonstrate..."
 2. Why this is hard and important
 3. How you do it (with specialist keywords for discoverability)
@@ -347,93 +347,7 @@ NeurIPS, ICML, and ICLR all require paper checklists. See [references/checklists
 
 ## Writing Philosophy for Top ML Conferences
 
-**This section distills the most important writing principles from leading ML researchers.** These aren't optional style suggestions—they're what separates accepted papers from rejected ones.
-
-> "A paper is a short, rigorous, evidence-based technical story with a takeaway readers care about." — Neel Nanda
-
-### The Sources Behind This Guidance
-
-This skill synthesizes writing philosophy from researchers who have published extensively at top venues:
-
-| Source | Key Contribution | Link |
-|--------|-----------------|------|
-| **Neel Nanda** (Google DeepMind) | The Narrative Principle, What/Why/So What framework | [How to Write ML Papers](https://www.alignmentforum.org/posts/eJGptPbbFPZGLpjsp/highly-opinionated-advice-on-how-to-write-ml-papers) |
-| **Sebastian Farquhar** (DeepMind) | 5-sentence abstract formula | [How to Write ML Papers](https://sebastianfarquhar.com/on-research/2024/11/04/how_to_write_ml_papers/) |
-| **Gopen & Swan** | 7 principles of reader expectations | [Science of Scientific Writing](https://cseweb.ucsd.edu/~swanson/papers/science-of-writing.pdf) |
-| **Zachary Lipton** | Word choice, eliminating hedging | [Heuristics for Scientific Writing](https://www.approximatelycorrect.com/2018/01/29/heuristics-technical-scientific-writing-machine-learning-perspective/) |
-| **Jacob Steinhardt** (UC Berkeley) | Precision, consistent terminology | [Writing Tips](https://bounded-regret.ghost.io/) |
-| **Ethan Perez** (Anthropic) | Micro-level clarity tips | [Easy Paper Writing Tips](https://ethanperez.net/easy-paper-writing-tips/) |
-| **Andrej Karpathy** | Single contribution focus | Various lectures |
-
-**For deeper dives into any of these, see:**
-- [references/writing-guide.md](references/writing-guide.md) - Full explanations with examples
-- [references/sources.md](references/sources.md) - Complete bibliography
-
-### Time Allocation (From Neel Nanda)
-
-Spend approximately **equal time** on each of:
-1. The abstract
-2. The introduction
-3. The figures
-4. Everything else combined
-
-**Why?** Most reviewers form judgments before reaching your methods. Readers encounter your paper as: **title → abstract → introduction → figures → maybe the rest.**
-
-### Writing Style Guidelines
-
-#### Sentence-Level Clarity (Gopen & Swan's 7 Principles)
-
-These principles are based on how readers actually process prose. Violating them forces readers to spend cognitive effort on structure rather than content.
-
-| Principle | Rule | Example |
-|-----------|------|---------|
-| **Subject-verb proximity** | Keep subject and verb close | ❌ "The model, which was trained on..., achieves" → ✅ "The model achieves... after training on..." |
-| **Stress position** | Place emphasis at sentence ends | ❌ "Accuracy improves by 15% when using attention" → ✅ "When using attention, accuracy improves by **15%**" |
-| **Topic position** | Put context first, new info after | ✅ "Given these constraints, we propose..." |
-| **Old before new** | Familiar info → unfamiliar info | Link backward, then introduce new |
-| **One unit, one function** | Each paragraph makes one point | Split multi-point paragraphs |
-| **Action in verb** | Use verbs, not nominalizations | ❌ "We performed an analysis" → ✅ "We analyzed" |
-| **Context before new** | Set stage before presenting | Explain before showing equation |
-
-**Full 7 principles with detailed examples:** See [references/writing-guide.md](references/writing-guide.md#the-7-principles-of-reader-expectations)
-
-#### Micro-Level Tips (Ethan Perez)
-
-These small changes accumulate into significantly clearer prose:
-
-- **Minimize pronouns**: ❌ "This shows..." → ✅ "This result shows..."
-- **Verbs early**: Position verbs near sentence start
-- **Unfold apostrophes**: ❌ "X's Y" → ✅ "The Y of X" (when awkward)
-- **Delete filler words**: "actually," "a bit," "very," "really," "basically," "quite," "essentially"
-
-**Full micro-tips with examples:** See [references/writing-guide.md](references/writing-guide.md#micro-level-writing-tips)
-
-#### Word Choice (Zachary Lipton)
-
-- **Be specific**: ❌ "performance" → ✅ "accuracy" or "latency" (say what you mean)
-- **Eliminate hedging**: Drop "may" and "can" unless genuinely uncertain
-- **Avoid incremental vocabulary**: ❌ "combine," "modify," "expand" → ✅ "develop," "propose," "introduce"
-- **Delete intensifiers**: ❌ "provides *very* tight approximation" → ✅ "provides tight approximation"
-
-#### Precision Over Brevity (Jacob Steinhardt)
-
-- **Consistent terminology**: Different terms for same concept creates confusion. Pick one and stick with it.
-- **State assumptions formally**: Before theorems, list all assumptions explicitly
-- **Intuition + rigor**: Provide intuitive explanations alongside formal proofs
-
-### What Reviewers Actually Read
-
-Understanding reviewer behavior helps prioritize your effort:
-
-| Paper Section | % Reviewers Who Read | Implication |
-|---------------|---------------------|-------------|
-| Abstract | 100% | Must be perfect |
-| Introduction | 90%+ (skimmed) | Front-load contribution |
-| Figures | Examined before methods | Figure 1 is critical |
-| Methods | Only if interested | Don't bury the lede |
-| Appendix | Rarely | Put only supplementary details |
-
-**Bottom line**: If your abstract and intro don't hook reviewers, they may never read your brilliant methods section.
+See [references/writing-philosophy.md](references/writing-philosophy.md) for: The Sources Behind This Guidance; Time Allocation (From Neel Nanda); Writing Style Guidelines; What Reviewers Actually Read.
 
 ---
 
@@ -460,355 +374,19 @@ Understanding reviewer behavior helps prioritize your effort:
 
 ## Using LaTeX Templates Properly
 
-### Workflow 4: Starting a New Paper from Template
-
-**Always copy the entire template directory first, then write within it.**
-
-```
-Template Setup Checklist:
-- [ ] Step 1: Copy entire template directory to new project
-- [ ] Step 2: Verify template compiles as-is (before any changes)
-- [ ] Step 3: Read the template's example content to understand structure
-- [ ] Step 4: Replace example content section by section
-- [ ] Step 5: Keep template comments/examples as reference until done
-- [ ] Step 6: Clean up template artifacts only at the end
-```
-
-**Step 1: Copy the Full Template**
-
-```bash
-# Create your paper directory with the complete template
-cp -r templates/neurips2025/ ~/papers/my-new-paper/
-cd ~/papers/my-new-paper/
-
-# Verify structure is complete
-ls -la
-# Should see: main.tex, neurips.sty, Makefile, etc.
-```
-
-**⚠️ IMPORTANT**: Copy the ENTIRE directory, not just `main.tex`. Templates include:
-- Style files (`.sty`) - required for compilation
-- Bibliography styles (`.bst`) - required for references
-- Example content - useful as reference
-- Makefiles - for easy compilation
-
-**Step 2: Verify Template Compiles First**
-
-Before making ANY changes, compile the template as-is:
-
-```bash
-# Using latexmk (recommended)
-latexmk -pdf main.tex
-
-# Or manual compilation
-pdflatex main.tex
-bibtex main
-pdflatex main.tex
-pdflatex main.tex
-```
-
-If the unmodified template doesn't compile, fix that first. Common issues:
-- Missing TeX packages → install via `tlmgr install <package>`
-- Wrong TeX distribution → use TeX Live (recommended)
-
-**Step 3: Keep Template Content as Reference**
-
-Don't immediately delete all example content. Instead:
-
-```latex
-% KEEP template examples commented out as you write
-% This shows you the expected format
-
-% Template example (keep for reference):
-% \begin{figure}[t]
-%   \centering
-%   \includegraphics[width=0.8\linewidth]{example-image}
-%   \caption{Template shows caption style}
-% \end{figure}
-
-% Your actual figure:
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=0.8\linewidth]{your-figure.pdf}
-  \caption{Your caption following the same style.}
-\end{figure}
-```
-
-**Step 4: Replace Content Section by Section**
-
-Work through the paper systematically:
-
-```
-Replacement Order:
-1. Title and authors (anonymize for submission)
-2. Abstract
-3. Introduction
-4. Methods
-5. Experiments
-6. Related Work
-7. Conclusion
-8. References (your .bib file)
-9. Appendix
-```
-
-For each section:
-1. Read the template's example content
-2. Note any special formatting or macros used
-3. Replace with your content following the same patterns
-4. Compile frequently to catch errors early
-
-**Step 5: Use Template Macros**
-
-Templates often define useful macros. Check the preamble for:
-
-```latex
-% Common template macros to use:
-\newcommand{\method}{YourMethodName}  % Consistent method naming
-\newcommand{\eg}{e.g.,\xspace}        % Proper abbreviations
-\newcommand{\ie}{i.e.,\xspace}
-\newcommand{\etal}{\textit{et al.}\xspace}
-```
-
-**Step 6: Clean Up Only at the End**
-
-Only remove template artifacts when paper is nearly complete:
-
-```latex
-% BEFORE SUBMISSION - remove these:
-% - Commented-out template examples
-% - Unused packages
-% - Template's example figures/tables
-% - Lorem ipsum or placeholder text
-
-% KEEP these:
-% - All style files (.sty)
-% - Bibliography style (.bst)
-% - Required packages from template
-% - Any custom macros you're using
-```
-
-### Template Pitfalls to Avoid
-
-| Pitfall | Problem | Solution |
-|---------|---------|----------|
-| Copying only `main.tex` | Missing `.sty`, won't compile | Copy entire directory |
-| Modifying `.sty` files | Breaks conference formatting | Never edit style files |
-| Adding random packages | Conflicts, breaks template | Only add if necessary |
-| Deleting template content too early | Lose formatting reference | Keep as comments until done |
-| Not compiling frequently | Errors accumulate | Compile after each section |
-
-### Quick Template Reference
-
-| Conference | Main File | Key Style File | Notes |
-|------------|-----------|----------------|-------|
-| NeurIPS 2025 | `main.tex` | `neurips.sty` | Has Makefile |
-| ICML 2026 | `example_paper.tex` | `icml2026.sty` | Includes algorithm packages |
-| ICLR 2026 | `iclr2026_conference.tex` | `iclr2026_conference.sty` | Has math_commands.tex |
-| ACL | `acl_latex.tex` | `acl.sty` | Strict formatting |
-| AAAI 2026 | `aaai2026-unified-template.tex` | `aaai2026.sty` | Very strict compliance |
-| COLM 2025 | `colm2025_conference.tex` | `colm2025_conference.sty` | Similar to ICLR |
+See [references/latex-templates.md](references/latex-templates.md) for: Workflow 4: Starting a New Paper from Template; Template Pitfalls to Avoid; Quick Template Reference.
 
 ---
 
 ## Conference Resubmission & Format Conversion
 
-When a paper is rejected or withdrawn from one venue and resubmitted to another, format conversion is required. This is a common workflow in ML research.
-
-### Workflow 3: Converting Between Conference Formats
-
-```
-Format Conversion Checklist:
-- [ ] Step 1: Identify source and target template differences
-- [ ] Step 2: Create new project with target template
-- [ ] Step 3: Copy content sections (not preamble)
-- [ ] Step 4: Adjust page limits and content
-- [ ] Step 5: Update conference-specific requirements
-- [ ] Step 6: Verify compilation and formatting
-```
-
-**Step 1: Key Template Differences**
-
-| From → To | Page Change | Key Adjustments |
-|-----------|-------------|-----------------|
-| NeurIPS → ICML | 9 → 8 pages | Cut 1 page, add Broader Impact if missing |
-| ICML → ICLR | 8 → 9 pages | Can expand experiments, add LLM disclosure |
-| NeurIPS → ACL | 9 → 8 pages | Restructure for NLP conventions, add Limitations |
-| ICLR → AAAI | 9 → 7 pages | Significant cuts needed, strict style adherence |
-| Any → COLM | varies → 9 | Reframe for language model focus |
-
-**Step 2: Content Migration (NOT Template Merge)**
-
-**Never copy LaTeX preambles between templates.** Instead:
-
-```bash
-# 1. Start fresh with target template
-cp -r templates/icml2026/ new_submission/
-
-# 2. Copy ONLY content sections from old paper
-# - Abstract text
-# - Section content (between \section{} commands)
-# - Figures and tables
-# - Bibliography entries
-
-# 3. Paste into target template structure
-```
-
-**Step 3: Adjusting for Page Limits**
-
-When cutting pages (e.g., NeurIPS 9 → AAAI 7):
-- Move detailed proofs to appendix
-- Condense related work (cite surveys instead of individual papers)
-- Combine similar experiments into unified tables
-- Use smaller figure sizes with subfigures
-- Tighten writing: eliminate redundancy, use active voice
-
-When expanding (e.g., ICML 8 → ICLR 9):
-- Add ablation studies reviewers requested
-- Expand limitations discussion
-- Include additional baselines
-- Add qualitative examples
-
-**Step 4: Conference-Specific Adjustments**
-
-| Target Venue | Required Additions |
-|--------------|-------------------|
-| **ICML** | Broader Impact Statement (after conclusion) |
-| **ICLR** | LLM usage disclosure, reciprocal reviewing agreement |
-| **ACL/EMNLP** | Limitations section (mandatory), Ethics Statement |
-| **AAAI** | Strict adherence to style file (no modifications) |
-| **NeurIPS** | Paper checklist (appendix), lay summary if accepted |
-
-**Step 5: Update References**
-
-```latex
-% Remove self-citations that reveal identity (for blind review)
-% Update any "under review" citations to published versions
-% Add new relevant work published since last submission
-```
-
-**Step 6: Addressing Previous Reviews**
-
-When resubmitting after rejection:
-- **Do** address reviewer concerns in the new version
-- **Do** add experiments/clarifications reviewers requested
-- **Don't** include a "changes from previous submission" section (blind review)
-- **Don't** reference the previous submission or reviews
-
-**Common Conversion Pitfalls:**
-- ❌ Copying `\usepackage` commands (causes conflicts)
-- ❌ Keeping old conference header/footer commands
-- ❌ Forgetting to update `\bibliography{}` path
-- ❌ Missing conference-specific required sections
-- ❌ Exceeding page limit after format change
+See [references/format-conversion.md](references/format-conversion.md) for: Workflow 3: Converting Between Conference Formats.
 
 ---
 
 ## Citation Workflow (Hallucination Prevention)
 
-**⚠️ CRITICAL**: AI-generated citations have ~40% error rate. **Never write BibTeX from memory.**
-
-### The Golden Rule
-
-```
-IF you cannot programmatically fetch a citation:
-    → Mark it as [CITATION NEEDED] or [PLACEHOLDER - VERIFY]
-    → Tell the scientist explicitly
-    → NEVER invent a plausible-sounding reference
-```
-
-### Workflow 2: Adding Citations
-
-```
-Citation Verification (MANDATORY for every citation):
-- [ ] Step 1: Search using Exa MCP or Semantic Scholar API
-- [ ] Step 2: Verify paper exists in 2+ sources (Semantic Scholar + arXiv/CrossRef)
-- [ ] Step 3: Retrieve BibTeX via DOI (programmatically, not from memory)
-- [ ] Step 4: Verify the claim you're citing actually appears in the paper
-- [ ] Step 5: Add verified BibTeX to bibliography
-- [ ] Step 6: If ANY step fails → mark as placeholder, inform scientist
-```
-
-**Step 0: Use Exa MCP for Initial Search (Recommended)**
-
-If Exa MCP is installed, use it to find relevant papers:
-```
-Search: "RLHF language model alignment 2023"
-Search: "sparse autoencoders interpretability"
-Search: "attention mechanism transformers Vaswani"
-```
-
-Then verify each result with Semantic Scholar and fetch BibTeX via DOI.
-
-**Step 1: Search Semantic Scholar**
-
-```python
-from semanticscholar import SemanticScholar
-
-sch = SemanticScholar()
-results = sch.search_paper("attention mechanism transformers", limit=5)
-for paper in results:
-    print(f"{paper.title} - {paper.paperId}")
-    print(f"  DOI: {paper.externalIds.get('DOI', 'N/A')}")
-```
-
-**Step 2: Verify Existence**
-
-Confirm paper appears in at least two sources (Semantic Scholar + CrossRef/arXiv).
-
-**Step 3: Retrieve BibTeX via DOI**
-
-```python
-import requests
-
-def doi_to_bibtex(doi: str) -> str:
-    """Get verified BibTeX from DOI via CrossRef."""
-    response = requests.get(
-        f"https://doi.org/{doi}",
-        headers={"Accept": "application/x-bibtex"}
-    )
-    response.raise_for_status()
-    return response.text
-
-# Example
-bibtex = doi_to_bibtex("10.48550/arXiv.1706.03762")
-print(bibtex)
-```
-
-**Step 4: Verify Claims**
-
-Before citing for a specific claim, access the paper and confirm the attributed claim actually appears.
-
-**Step 5: Handle Failures Explicitly**
-
-If you cannot verify a citation at ANY step:
-
-```latex
-% Option 1: Explicit placeholder
-\cite{PLACEHOLDER_smith2023_verify}  % TODO: Could not verify - scientist must confirm
-
-% Option 2: Note in text
-... as shown in prior work [CITATION NEEDED - could not verify Smith et al. 2023].
-```
-
-**Always inform the scientist:**
-> "I could not verify the following citations and have marked them as placeholders:
-> - Smith et al. 2023 on reward hacking - could not find in Semantic Scholar
-> - Jones 2022 on scaling laws - found similar paper but different authors
-> Please verify these before submission."
-
-### Summary: Citation Rules
-
-| Situation | Action |
-|-----------|--------|
-| Found paper, got DOI, fetched BibTeX | ✅ Use the citation |
-| Found paper, no DOI | ✅ Use arXiv BibTeX or manual entry from paper |
-| Paper exists but can't fetch BibTeX | ⚠️ Mark placeholder, inform scientist |
-| Uncertain if paper exists | ❌ Mark `[CITATION NEEDED]`, inform scientist |
-| "I think there's a paper about X" | ❌ **NEVER cite** - search first or mark placeholder |
-
-**🚨 NEVER generate BibTeX from memory—always fetch programmatically. 🚨**
-
-See [references/citation-workflow.md](references/citation-workflow.md) for complete API documentation.
+**Required whenever you add a citation:** follow Workflow 2 in [references/adding-citations.md](references/adding-citations.md) (the golden rule, the step-by-step verified citation workflow, and a summary of citation rules). The rules in the CRITICAL citation section above always apply.
 
 ---
 
@@ -866,36 +444,7 @@ See [references/reviewer-guidelines.md](references/reviewer-guidelines.md) for d
 
 ## Tables and Figures
 
-### Tables
-
-Use `booktabs` LaTeX package for professional tables:
-
-```latex
-\usepackage{booktabs}
-\begin{tabular}{lcc}
-\toprule
-Method & Accuracy ↑ & Latency ↓ \\
-\midrule
-Baseline & 85.2 & 45ms \\
-\textbf{Ours} & \textbf{92.1} & 38ms \\
-\bottomrule
-\end{tabular}
-```
-
-**Rules:**
-- Bold best value per metric
-- Include direction symbols (↑ higher is better, ↓ lower is better)
-- Right-align numerical columns
-- Consistent decimal precision
-
-### Figures
-
-- **Vector graphics** (PDF, EPS) for all plots and diagrams
-- **Raster** (PNG 600 DPI) only for photographs
-- Use **colorblind-safe palettes** (Okabe-Ito or Paul Tol)
-- Verify **grayscale readability** (8% of men have color vision deficiency)
-- **No title inside figure**—the caption serves this function
-- **Self-contained captions**—reader should understand without main text
+See [references/tables-figures.md](references/tables-figures.md) for: Tables; Figures.
 
 ---
 

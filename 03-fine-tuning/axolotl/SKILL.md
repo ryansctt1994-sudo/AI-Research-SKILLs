@@ -1,7 +1,7 @@
 ---
 name: axolotl
 description: Expert guidance for fine-tuning LLMs with Axolotl - YAML configs, 100+ models, LoRA/QLoRA, DPO/KTO/ORPO/GRPO, multimodal support
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Fine-Tuning, Axolotl, LLM, LoRA, QLoRA, DPO, KTO, ORPO, GRPO, YAML, HuggingFace, DeepSpeed, Multimodal]
@@ -27,13 +27,13 @@ This skill should be triggered when:
 
 **Pattern 1:** To validate that acceptable data transfer speeds exist for your training job, running NCCL Tests can help pinpoint bottlenecks, for example:
 
-```
+```bash
 ./build/all_reduce_perf -b 8 -e 128M -f 2 -g 3
 ```
 
 **Pattern 2:** Configure your model to use FSDP in the Axolotl yaml. For example:
 
-```
+```yaml
 fsdp_version: 2
 fsdp_config:
   offload_params: true
@@ -45,31 +45,31 @@ fsdp_config:
 
 **Pattern 3:** The context_parallel_size should be a divisor of the total number of GPUs. For example:
 
-```
+```yaml
 context_parallel_size
 ```
 
 **Pattern 4:** For example: - With 8 GPUs and no sequence parallelism: 8 different batches processed per step - With 8 GPUs and context_parallel_size=4: Only 2 different batches processed per step (each split across 4 GPUs) - If your per-GPU micro_batch_size is 2, the global batch size decreases from 16 to 4
 
-```
+```text
 context_parallel_size=4
 ```
 
 **Pattern 5:** Setting save_compressed: true in your configuration enables saving models in a compressed format, which: - Reduces disk space usage by approximately 40% - Maintains compatibility with vLLM for accelerated inference - Maintains compatibility with llmcompressor for further optimization (example: quantization)
 
-```
+```yaml
 save_compressed: true
 ```
 
 **Pattern 6:** Note It is not necessary to place your integration in the integrations folder. It can be in any location, so long as it’s installed in a package in your python env. See this repo for an example: https://github.com/axolotl-ai-cloud/diff-transformer
 
-```
+```text
 integrations
 ```
 
 **Pattern 7:** Handle both single-example and batched data. - single example: sample[‘input_ids’] is a list[int] - batched data: sample[‘input_ids’] is a list[list[int]]
 
-```
+```python
 utils.trainer.drop_long_seq(sample, sequence_len=2048, min_sequence_len=2)
 ```
 

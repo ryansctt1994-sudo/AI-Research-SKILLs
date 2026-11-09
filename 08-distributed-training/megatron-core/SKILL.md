@@ -1,7 +1,7 @@
 ---
 name: training-llms-megatron
 description: Trains large language models (2B-462B parameters) using NVIDIA Megatron-Core with advanced parallelism strategies. Use when training models >1B parameters, need maximum GPU efficiency (47% MFU on H100), or require tensor/pipeline/sequence/context/expert parallelism. Production-ready framework used for Nemotron, LLaMA, DeepSeek.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Megatron-Core, Large-Scale Training, NVIDIA, Tensor Parallelism, Pipeline Parallelism, Model Parallelism, H100, Distributed Training, Production]
@@ -38,7 +38,7 @@ torchrun --nproc_per_node=2 examples/run_simple_mcore_train_loop.py
 
 Copy this checklist:
 
-```
+```text
 LLaMA Training Setup:
 - [ ] Step 1: Choose parallelism configuration
 - [ ] Step 2: Configure training hyperparameters
@@ -123,7 +123,7 @@ sbatch --nodes=8 --gpus-per-node=8 train_llama_70b.sh
 **Step 4: Monitor performance metrics**
 
 Key metrics to track:
-```
+```text
 Model FLOP Utilization (MFU): Target >40% on H100
 Throughput: Tokens/sec/GPU
 Memory usage: <80GB per GPU for 70B model
@@ -134,7 +134,7 @@ Loss: Should decrease steadily
 
 For sparse MoE models like Mixtral.
 
-```
+```text
 MoE Training:
 - [ ] Step 1: Configure expert parallelism
 - [ ] Step 2: Set MoE hyperparameters
@@ -184,7 +184,7 @@ torchrun \
 
 Expert parallelism distributes different experts across GPUs, reducing memory while maintaining capacity.
 
-```
+```text
 Memory without EP: 8 experts × 7B = 56GB per GPU
 Memory with EP=4: 2 experts × 7B = 14GB per GPU
 Savings: 75% memory reduction
@@ -194,7 +194,7 @@ Savings: 75% memory reduction
 
 Achieve 47% MFU on H100.
 
-```
+```text
 Performance Optimization:
 - [ ] Step 1: Enable Flash Attention
 - [ ] Step 2: Use FP8 precision (H100)
@@ -239,7 +239,7 @@ Typical values:
 **Step 4: Tune parallelism degrees**
 
 Rules of thumb:
-```
+```text
 Tensor Parallel: Use ≤8 (limited by NVLink within node)
 Pipeline Parallel: Use for >70B models
 Context Parallel: Use for sequences >8K tokens
@@ -247,7 +247,7 @@ Data Parallel: Fill remaining GPUs
 ```
 
 Example 405B on 128 H100s:
-```
+```text
 TP=8 (1 node)
 PP=8 (across nodes)
 CP=2 (long sequences)

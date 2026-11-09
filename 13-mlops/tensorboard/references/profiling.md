@@ -543,3 +543,41 @@ with profiler.profile(
 - **TensorFlow Profiler**: https://www.tensorflow.org/guide/profiler
 - **NVIDIA Nsight**: https://developer.nvidia.com/nsight-systems
 - **PyTorch Bottleneck**: https://pytorch.org/docs/stable/bottleneck.html
+
+## Performance Profiling
+
+### TensorFlow Profiler
+
+```python
+# Enable profiling
+tensorboard_callback = tf.keras.callbacks.TensorBoard(
+    log_dir='logs',
+    profile_batch='10,20'  # Profile batches 10-20
+)
+
+model.fit(x, y, callbacks=[tensorboard_callback])
+
+# View in TensorBoard Profile tab
+# Shows: GPU utilization, kernel stats, memory usage, bottlenecks
+```
+
+### PyTorch Profiler
+
+```python
+import torch.profiler as profiler
+
+with profiler.profile(
+    activities=[
+        profiler.ProfilerActivity.CPU,
+        profiler.ProfilerActivity.CUDA
+    ],
+    on_trace_ready=torch.profiler.tensorboard_trace_handler('./runs/profiler'),
+    record_shapes=True,
+    with_stack=True
+) as prof:
+    for batch in train_loader:
+        loss = train_step(batch)
+        prof.step()
+
+# View in TensorBoard Profile tab
+```

@@ -664,3 +664,117 @@ bad_prompts = [
 
 # Structure: [mood] [genre] with [instruments] at [tempo/style]
 ```
+
+## MusicGen-Style usage
+
+### Style-conditioned generation
+
+```python
+from audiocraft.models import MusicGen
+
+# Load style model
+model = MusicGen.get_pretrained('facebook/musicgen-style')
+
+# Configure generation with style
+model.set_generation_params(
+    duration=30,
+    cfg_coef=3.0,
+    cfg_coef_beta=5.0  # Style influence
+)
+
+# Configure style conditioner
+model.set_style_conditioner_params(
+    eval_q=3,          # RVQ quantizers (1-6)
+    excerpt_length=3.0  # Style excerpt length
+)
+
+# Load style reference
+style_audio, sr = torchaudio.load("reference_style.wav")
+
+# Generate with text + style
+descriptions = ["upbeat dance track"]
+wav = model.generate_with_style(descriptions, style_audio, sr)
+```
+
+### Style-only generation (no text)
+
+```python
+# Generate matching style without text prompt
+model.set_generation_params(
+    duration=30,
+    cfg_coef=3.0,
+    cfg_coef_beta=None  # Disable double CFG for style-only
+)
+
+wav = model.generate_with_style([None], style_audio, sr)
+```
+
+## EnCodec usage
+
+### Audio compression
+
+```python
+from audiocraft.models import CompressionModel
+import torch
+import torchaudio
+
+# Load EnCodec
+model = CompressionModel.get_pretrained('facebook/encodec_32khz')
+
+# Load audio
+wav, sr = torchaudio.load("audio.wav")
+
+# Ensure correct sample rate
+if sr != 32000:
+    resampler = torchaudio.transforms.Resample(sr, 32000)
+    wav = resampler(wav)
+
+# Encode to tokens
+with torch.no_grad():
+    encoded = model.encode(wav.unsqueeze(0))
+    codes = encoded[0]  # Audio codes
+
+# Decode back to audio
+with torch.no_grad():
+    decoded = model.decode(codes)
+
+torchaudio.save("reconstructed.wav", decoded[0].cpu(), sample_rate=32000)
+```
+
+## Performance optimization
+
+### Memory optimization
+
+```python
+# Use smaller model
+model = MusicGen.get_pretrained('facebook/musicgen-small')
+
+# Clear cache between generations
+torch.cuda.empty_cache()
+
+# Generate shorter durations
+model.set_generation_params(duration=10)  # Instead of 30
+
+# Use half precision
+model = model.half()
+```
+
+### Batch processing efficiency
+
+```python
+# Process multiple prompts at once (more efficient)
+descriptions = ["prompt1", "prompt2", "prompt3", "prompt4"]
+wav = model.generate(descriptions)  # Single batch
+
+# Instead of
+for desc in descriptions:
+    wav = model.generate([desc])  # Multiple batches (slower)
+```
+
+### GPU memory requirements
+
+| Model | FP32 VRAM | FP16 VRAM |
+|-------|-----------|-----------|
+| musicgen-small | ~4GB | ~2GB |
+| musicgen-medium | ~8GB | ~4GB |
+| musicgen-large | ~16GB | ~8GB |

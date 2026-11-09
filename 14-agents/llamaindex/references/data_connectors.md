@@ -106,3 +106,48 @@ documents = reader.load_data("data.txt")
 
 - **LlamaHub**: https://llamahub.ai
 - **Data Connectors Docs**: https://developers.llamaindex.ai/python/framework/modules/data_connectors/
+
+## Data ingestion patterns
+
+### Multiple file types
+
+```python
+# Load all supported formats
+documents = SimpleDirectoryReader(
+    "./data",
+    recursive=True,
+    required_exts=[".pdf", ".docx", ".txt", ".md"]
+).load_data()
+```
+
+### Web scraping
+
+```python
+from llama_index.readers.web import BeautifulSoupWebReader
+
+reader = BeautifulSoupWebReader()
+documents = reader.load_data(urls=[
+    "https://docs.python.org/3/tutorial/",
+    "https://docs.python.org/3/library/"
+])
+```
+
+### Database
+
+```python
+from llama_index.readers.database import DatabaseReader
+
+reader = DatabaseReader(
+    sql_database_uri="postgresql://user:pass@localhost/db"
+)
+documents = reader.load_data(query="SELECT * FROM articles")
+```
+
+### API endpoints
+
+```python
+from llama_index.readers.json import JSONReader
+
+reader = JSONReader()
+documents = reader.load_data("https://api.example.com/data.json")
+```

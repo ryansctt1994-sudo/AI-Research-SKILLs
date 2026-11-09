@@ -1,7 +1,7 @@
 ---
 name: evaluating-llms-harness
 description: Evaluates LLMs across 60+ academic benchmarks (MMLU, HumanEval, GSM8K, TruthfulQA, HellaSwag). Use when benchmarking model quality, comparing models, reporting academic results, or tracking training progress. Industry standard used by EleutherAI, HuggingFace, and major labs. Supports HuggingFace, vLLM, APIs.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Evaluation, LM Evaluation Harness, Benchmarking, MMLU, HumanEval, GSM8K, EleutherAI, Model Quality, Academic Benchmarks, Industry Standard]
@@ -41,7 +41,7 @@ Evaluate model on core benchmarks (MMLU, GSM8K, HumanEval).
 
 Copy this checklist:
 
-```
+```text
 Benchmark Evaluation:
 - [ ] Step 1: Choose benchmark suite
 - [ ] Step 2: Configure model
@@ -147,7 +147,7 @@ Results saved to `results/llama2-7b-eval.json`:
 
 Evaluate checkpoints during training.
 
-```
+```text
 Training Progress Tracking:
 - [ ] Step 1: Set up periodic evaluation
 - [ ] Step 2: Choose quick benchmarks
@@ -244,7 +244,7 @@ plt.savefig("training_curve.png")
 
 Benchmark suite for model comparison.
 
-```
+```text
 Model Comparison:
 - [ ] Step 1: Define model list
 - [ ] Step 2: Run evaluations
@@ -319,7 +319,7 @@ print(df.to_markdown(index=False))
 ```
 
 Output:
-```
+```text
 | Model                  | MMLU  | GSM8K | HELLASWAG | TRUTHFULQA |
 |------------------------|-------|-------|-----------|------------|
 | meta-llama/Llama-2-7b  | 0.459 | 0.142 | 0.765     | 0.391      |
@@ -332,7 +332,7 @@ Output:
 
 Use vLLM backend for 5-10x faster evaluation.
 
-```
+```text
 vLLM Evaluation:
 - [ ] Step 1: Install vLLM
 - [ ] Step 2: Configure vLLM backend

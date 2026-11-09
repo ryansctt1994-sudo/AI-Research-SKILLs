@@ -346,3 +346,31 @@ outputs = monitor_inference(llm, ["Prompt 1", "Prompt 2"])
 - **MoE-Inference-Bench**: https://arxiv.org/abs/2508.17467
 - **vLLM Documentation**: https://docs.vllm.ai
 - **PyTorch MoE Optimization**: https://pytorch.org/blog/accelerating-moe-model/
+
+## Inference Optimization
+
+### Sparse Inference
+
+```python
+# Only activate top-k experts (huge memory savings)
+@torch.no_grad()
+def moe_inference(x, model, top_k=2):
+    """Sparse MoE inference: only load k experts."""
+    # Router
+    gate_logits = model.gate(x)
+    topk_scores, topk_indices = torch.topk(
+        torch.softmax(gate_logits, dim=-1),
+        k=top_k,
+        dim=-1
+    )
+
+    # Load and run only top-k experts
+    output = torch.zeros_like(x)
+    for i in range(top_k):
+        expert_idx = topk_indices[:, i]
+        # Load expert from disk/offload if needed
+        expert = model.load_expert(expert_idx)
+        output += topk_scores[:, i:i+1] * expert(x)
+
+    return output
+```

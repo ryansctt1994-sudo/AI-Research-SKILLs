@@ -1,7 +1,7 @@
 ---
 name: constitutional-ai
 description: Anthropic's method for training harmless AI through self-improvement. Two-phase approach - supervised learning with self-critique/revision, then RLAIF (RL from AI Feedback). Use for safety alignment, reducing harmful outputs without human labels. Powers Claude's safety system.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Safety Alignment, Constitutional AI, RLAIF, Self-Critique, Harmlessness, Anthropic, AI Safety, RL From AI Feedback, Claude]
@@ -21,7 +21,7 @@ Constitutional AI (CAI) trains models to be harmless through self-critique and A
 2. **Reinforcement Learning (RL)**: RLAIF (RL from AI Feedback)
 
 **Constitution example**:
-```
+```text
 Principles:
 1. Choose the response that is most helpful, honest, and harmless
 2. Avoid responses that are toxic, racist, or sexist
@@ -222,7 +222,7 @@ cot_critiques = generator(
 **Issue: Model refuses too much (evasive)**
 
 Add constitution principle:
-```
+```text
 Prefer responses that engage thoughtfully with questions rather than
 refusing to answer. Explain concerns while still being helpful.
 ```
@@ -230,7 +230,7 @@ refusing to answer. Explain concerns while still being helpful.
 **Issue: Self-critiques are weak**
 
 Use stronger critique prompts:
-```
+```text
 Critically analyze this response for ANY potential issues, however minor.
 Be thorough and specific in identifying problems.
 ```
@@ -259,11 +259,11 @@ final_preference = majority_vote(prefs_1, prefs_2, prefs_3)
 
 ## Advanced topics
 
-**Constitution design**: See [references/constitution-design.md](references/constitution-design.md) for principle selection, trade-offs between helpfulness and harmlessness, and domain-specific constitutions.
+**Constitution design**: See the [Constitutional AI paper](https://arxiv.org/abs/2212.08073) for principle selection, trade-offs between helpfulness and harmlessness, and domain-specific constitutions.
 
-**RLAIF vs RLHF**: See [references/rlaif-comparison.md](references/rlaif-comparison.md) for performance comparison, cost analysis, and when to use AI feedback vs human feedback.
+**RLAIF vs RLHF**: See the [RLAIF vs. RLHF paper](https://arxiv.org/abs/2309.00267) for performance comparison, cost analysis, and when to use AI feedback vs human feedback.
 
-**Chain-of-thought reasoning**: See [references/cot-critique.md](references/cot-critique.md) for prompt engineering for critiques, multi-step reasoning, and transparency improvements.
+**Chain-of-thought reasoning**: See the [Constitutional AI paper](https://arxiv.org/abs/2212.08073) (CoT critique section) for prompt engineering for critiques, multi-step reasoning, and transparency improvements.
 
 ## Hardware requirements
 

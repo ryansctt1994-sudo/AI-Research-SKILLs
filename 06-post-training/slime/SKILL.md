@@ -1,7 +1,7 @@
 ---
 name: slime-rl-training
 description: Provides guidance for LLM post-training with RL using slime, a Megatron+SGLang framework. Use when training GLM models, implementing custom data generation workflows, or needing tight Megatron-LM integration for RL scaling.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Reinforcement Learning, Megatron-LM, SGLang, GRPO, Post-Training, GLM]
@@ -34,7 +34,7 @@ slime is an LLM post-training framework from Tsinghua's THUDM team, powering GLM
 
 ## Architecture Overview
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │                    Data Buffer                          │
 │ - Prompt initialization and management                  │
@@ -294,7 +294,7 @@ slime uses three types of arguments:
 
 ### Key Constraints
 
-```
+```text
 rollout_batch_size × n_samples_per_prompt = global_batch_size × num_steps_per_rollout
 ```
 

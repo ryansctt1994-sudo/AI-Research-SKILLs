@@ -420,7 +420,7 @@ python3 -c "import json; json.load(open('.claude-plugin/marketplace.json'))"
 ## 🎖️ Recognition
 
 All contributors will be:
-- ✅ Listed in [CONTRIBUTORS.md](CONTRIBUTORS.md)
+- ✅ Listed in [the contributors page](https://github.com/Orchestra-Research/AI-research-SKILLs/graphs/contributors)
 - ✅ Mentioned in release notes
 - ✅ Featured on project homepage (when launched)
 - ✅ Attributed in SKILL.md metadata

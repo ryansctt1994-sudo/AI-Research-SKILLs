@@ -1,7 +1,7 @@
 ---
 name: stable-diffusion-image-generation
 description: State-of-the-art text-to-image generation with Stable Diffusion models via HuggingFace Diffusers. Use when generating images from text prompts, performing image-to-image translation, inpainting, or building custom diffusion pipelines.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Image Generation, Stable Diffusion, Diffusers, Text-to-Image, Multimodal, Computer Vision]
@@ -98,7 +98,7 @@ image = pipe(
 
 Diffusers is built around three core components:
 
-```
+```text
 Pipeline (orchestration)
 ├── Model (neural networks)
 │   ├── UNet / Transformer (noise prediction)
@@ -109,7 +109,7 @@ Pipeline (orchestration)
 
 ### Pipeline inference flow
 
-```
+```text
 Text Prompt → Text Encoder → Text Embeddings
                                     ↓
 Random Noise → [Denoising Loop] ← Scheduler
@@ -364,60 +364,11 @@ pipe.enable_vae_tiling()
 
 ## Model variants
 
-### Loading different precisions
-
-```python
-# FP16 (recommended for GPU)
-pipe = DiffusionPipeline.from_pretrained(
-    "model-id",
-    torch_dtype=torch.float16,
-    variant="fp16"
-)
-
-# BF16 (better precision, requires Ampere+ GPU)
-pipe = DiffusionPipeline.from_pretrained(
-    "model-id",
-    torch_dtype=torch.bfloat16
-)
-```
-
-### Loading specific components
-
-```python
-from diffusers import UNet2DConditionModel, AutoencoderKL
-
-# Load custom VAE
-vae = AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse")
-
-# Use with pipeline
-pipe = DiffusionPipeline.from_pretrained(
-    "stable-diffusion-v1-5/stable-diffusion-v1-5",
-    vae=vae,
-    torch_dtype=torch.float16
-)
-```
+See the **Model variants** section of [references/advanced-usage.md](references/advanced-usage.md) for: Loading different precisions; Loading specific components.
 
 ## Batch generation
 
-Generate multiple images efficiently:
-
-```python
-# Multiple prompts
-prompts = [
-    "A cat playing piano",
-    "A dog reading a book",
-    "A bird painting a picture"
-]
-
-images = pipe(prompts, num_inference_steps=30).images
-
-# Multiple images per prompt
-images = pipe(
-    "A beautiful sunset",
-    num_images_per_prompt=4,
-    num_inference_steps=30
-).images
-```
+See the **Batch generation** section of [references/advanced-usage.md](references/advanced-usage.md).
 
 ## Common workflows
 
