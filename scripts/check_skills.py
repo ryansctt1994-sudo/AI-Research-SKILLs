@@ -47,6 +47,28 @@ def markdown_local_targets(source: str):
             yield number, unquote(target.split("#", 1)[0])
 
 
+def untagged_code_fences(source: str) -> list[int]:
+    """Report opening Markdown code fences missing an info string.
+
+    Closing fences, and backticks nested inside longer fenced examples, do not
+    require a language. Limit indentation to Markdown's three-space threshold.
+    """
+    open_fence: tuple[str, int] | None = None
+    missing: list[int] = []
+    for line_number, line in enumerate(source.splitlines(), 1):
+        match = re.match(r"^ {0,3}(`{3,}|~{3,})(.*)$", line)
+        if not match:
+            continue
+        marker, tail = match.groups()
+        if open_fence is None:
+            if not tail.strip():
+                missing.append(line_number)
+            open_fence = (marker[0], len(marker))
+        elif marker[0] == open_fence[0] and len(marker) >= open_fence[1] and not tail.strip():
+            open_fence = None
+    return missing
+
+
 def check_tree(root: Path) -> list[str]:
     errors: list[str] = []
     skills = find_skills(root)
@@ -74,6 +96,10 @@ def check_tree(root: Path) -> list[str]:
             errors.append(f"skill path escapes checkout: {relative}")
             continue
         content = path.read_text(encoding="utf-8")
+        if len(content.splitlines()) > 500:
+            errors.append(f"{relative}: SKILL.md exceeds 500 lines")
+        for line_number in untagged_code_fences(content):
+            errors.append(f"{relative}:{line_number} untagged code fence")
         parts = content.split("---", 2)
         if not content.startswith("---\n") or len(parts) < 3:
             errors.append(f"missing frontmatter: {relative}")
