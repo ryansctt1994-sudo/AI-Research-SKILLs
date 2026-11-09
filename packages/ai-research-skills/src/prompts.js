@@ -5,9 +5,9 @@ import chalk from 'chalk';
  * Skill categories with their skill counts and example skills
  */
 export const CATEGORIES = [
-  { id: '01-model-architecture', name: 'Model Architecture', skills: 6, examples: 'LitGPT, Mamba, TorchTitan, Megatron' },
+  { id: '01-model-architecture', name: 'Model Architecture', skills: 5, examples: 'LitGPT, Mamba, TorchTitan, Megatron' },
   { id: '02-tokenization', name: 'Tokenization', skills: 2, examples: 'HuggingFace Tokenizers, SentencePiece' },
-  { id: '03-fine-tuning', name: 'Fine-Tuning', skills: 5, examples: 'Axolotl, Unsloth, Torchtune, PEFT' },
+  { id: '03-fine-tuning', name: 'Fine-Tuning', skills: 4, examples: 'Axolotl, Unsloth, Torchtune, PEFT' },
   { id: '04-mechanistic-interpretability', name: 'Mechanistic Interp.', skills: 4, examples: 'TransformerLens, SAELens, NNsight' },
   { id: '05-data-processing', name: 'Data Processing', skills: 2, examples: 'NeMo Curator, Ray Data' },
   { id: '06-post-training', name: 'Post-Training', skills: 8, examples: 'GRPO, verl, slime, miles, torchforge' },
@@ -43,21 +43,21 @@ export const INDIVIDUAL_SKILLS = [
   // Fine-Tuning
   { id: '03-fine-tuning/axolotl', name: 'Axolotl', category: 'Fine-Tuning' },
   { id: '03-fine-tuning/unsloth', name: 'Unsloth', category: 'Fine-Tuning' },
-  { id: '03-fine-tuning/torchtune', name: 'Torchtune', category: 'Fine-Tuning' },
+  { id: '03-fine-tuning/llama-factory', name: 'LLaMA-Factory', category: 'Fine-Tuning' },
   // Inference
   { id: '12-inference-serving/vllm', name: 'vLLM', category: 'Inference' },
   { id: '12-inference-serving/sglang', name: 'SGLang', category: 'Inference' },
   { id: '12-inference-serving/tensorrt-llm', name: 'TensorRT-LLM', category: 'Inference' },
   // Training
   { id: '08-distributed-training/deepspeed', name: 'DeepSpeed', category: 'Training' },
-  { id: '08-distributed-training/fsdp', name: 'FSDP', category: 'Training' },
+  { id: '08-distributed-training/pytorch-fsdp2', name: 'FSDP2', category: 'Training' },
   { id: '01-model-architecture/torchtitan', name: 'TorchTitan', category: 'Architecture' },
   // Optimization
   { id: '10-optimization/flash-attention', name: 'Flash Attention', category: 'Optimization' },
   { id: '10-optimization/gptq', name: 'GPTQ', category: 'Optimization' },
   // Tools
-  { id: '13-mlops/wandb', name: 'Weights & Biases', category: 'MLOps' },
-  { id: '11-evaluation/lm-eval-harness', name: 'lm-eval-harness', category: 'Evaluation' },
+  { id: '13-mlops/weights-and-biases', name: 'Weights & Biases', category: 'MLOps' },
+  { id: '11-evaluation/lm-evaluation-harness', name: 'lm-eval-harness', category: 'Evaluation' },
   { id: '16-prompt-engineering/dspy', name: 'DSPy', category: 'Prompting' },
   { id: '15-rag/chroma', name: 'Chroma', category: 'RAG' },
   // Paper Writing
@@ -77,8 +77,8 @@ export const QUICK_START_SKILLS = [
   '12-inference-serving/sglang',
   '08-distributed-training/deepspeed',
   '10-optimization/flash-attention',
-  '13-mlops/wandb',
-  '11-evaluation/lm-eval-harness',
+  '13-mlops/weights-and-biases',
+  '11-evaluation/lm-evaluation-harness',
   '16-prompt-engineering/dspy',
   '15-rag/chroma',
   '20-ml-paper-writing',
