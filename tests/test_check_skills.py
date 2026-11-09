@@ -52,6 +52,21 @@ class SkillsTreeTests(unittest.TestCase):
         sample = "```python\n[not-a-link](missing.md)\n```\n`[also](missing.md)`\n"
         self.assertEqual([], list(markdown_local_targets(sample)))
 
+    def test_excessive_skill_lines_fail(self):
+        path = self.root / "01-example" / "demo" / "SKILL.md"
+        path.write_text(path.read_text() + "text\\n" * 501)
+        self.assertTrue(any("exceeds 500 lines" in e for e in check_tree(self.root)))
+
+    def test_untagged_code_fence_fails(self):
+        path = self.root / "01-example" / "demo" / "SKILL.md"
+        path.write_text(path.read_text() + "```\\nplain output\\n```\\n")
+        self.assertTrue(any("untagged code fence" in e for e in check_tree(self.root)))
+
+    def test_tagged_code_fence_remains_valid(self):
+        path = self.root / "01-example" / "demo" / "SKILL.md"
+        path.write_text(path.read_text() + "```text\\nplain output\\n```\\n")
+        self.assertEqual([], check_tree(self.root))
+
     def test_duplicate_marketplace_entry_fails(self):
         path = self.root / ".claude-plugin" / "marketplace.json"
         path.write_text(json.dumps({"plugins": [{"skills": ["./01-example/demo", "./01-example/demo"]}]}))
