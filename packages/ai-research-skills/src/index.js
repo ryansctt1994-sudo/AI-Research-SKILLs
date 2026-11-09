@@ -56,7 +56,7 @@ async function interactiveFlow() {
   let agents = [];
 
   // STEP 1: Welcome + Agent Detection
-  showWelcome();
+  showWelcome(getTotalSkillCount(), CATEGORIES.length, SUPPORTED_AGENTS.length);
   const spinner = ora({
     text: chalk.cyan('Detecting coding agents...'),
     spinner: 'dots',
