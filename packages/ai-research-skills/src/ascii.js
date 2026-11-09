@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { CATEGORIES, getTotalSkillCount } from './prompts.js';
 
 // Clean capital ORCHESTRA
 const logo = `
@@ -15,7 +16,7 @@ const logo = `
 /**
  * Welcome screen
  */
-export function showWelcome(skillCount = 82, categoryCount = 20, agentCount = 6) {
+export function showWelcome(skillCount = getTotalSkillCount(), categoryCount = CATEGORIES.length, agentCount = 6) {
   console.clear();
   console.log(chalk.white(logo));
   console.log();
