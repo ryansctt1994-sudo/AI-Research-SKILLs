@@ -1,0 +1,42 @@
+name: Skill Catalog and Installer Regression
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-skill-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate checked-in skill metadata, references and marketplace
+        run: python scripts/check_skills.py
+      - name: Run offline checker negative controls
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+
+  npm-installer-catalog:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/ai-research-skills
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: packages/ai-research-skills/package-lock.json
+      - name: Install locked dependencies without package scripts
+        run: npm ci --ignore-scripts
+      - name: Validate CLI syntax and catalog invariants
+        run: |
+          node --check src/index.js
+          node --check src/prompts.js
+          npm test
