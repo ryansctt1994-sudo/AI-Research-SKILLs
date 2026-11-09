@@ -1,7 +1,7 @@
 ---
 name: gptq
 description: Post-training 4-bit quantization for LLMs with minimal accuracy loss. Use for deploying large models (70B, 405B) on consumer GPUs, when you need 4× memory reduction with <2% perplexity degradation, or for faster inference (3-4× speedup) vs FP16. Integrates with transformers and PEFT for QLoRA fine-tuning.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Optimization, GPTQ, Quantization, 4-Bit, Post-Training, Memory Optimization, Consumer GPUs, Fast Inference, QLoRA, Group-Wise Quantization]
@@ -134,7 +134,7 @@ model.push_to_hub("username/llama-2-7b-gptq")
 | 1024 | Largest | Lowest | Fastest | Not recommended |
 
 **Example**:
-```
+```text
 Weight matrix: [1024, 4096] = 4.2M elements
 
 Group size = 128:

@@ -1,7 +1,7 @@
 ---
 name: long-context
 description: Extend context windows of transformer models using RoPE, YaRN, ALiBi, and position interpolation techniques. Use when processing long documents (32k-128k+ tokens), extending pre-trained models beyond original context limits, or implementing efficient positional encodings. Covers rotary embeddings, attention biases, interpolation methods, and extrapolation strategies for LLMs.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Emerging Techniques, Long Context, RoPE, YaRN, ALiBi, Position Interpolation, Extended Context, Rotary Embeddings, Attention Bias, Context Extension, Positional Encoding]
@@ -168,7 +168,7 @@ model.config.rope_scaling = {
 - Enables length extrapolation
 
 **Mathematical formulation:**
-```
+```text
 q_m = (W_q * x_m) * e^(imθ)
 k_n = (W_k * x_n) * e^(inθ)
 
@@ -213,7 +213,7 @@ yarn_config = {
 - Bias proportional to key-query distance
 
 **Formula:**
-```
+```text
 attention_bias[i, j] = -m * |i - j|
 
 where m = slope for each attention head
@@ -233,7 +233,7 @@ where m = slope for each attention head
 - Minimal fine-tuning required
 
 **Formula:**
-```
+```python
 # Original: position indices [0, 1, 2, ..., L]
 # Extended: position indices [0, 0.5, 1.0, ..., L/2]
 # (for 2× extension)
@@ -467,55 +467,7 @@ scale_to_1M_tokens()  # Won't work without massive fine-tuning
 
 ## Production Deployment
 
-### Inference with Long Context
-
-```python
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-# Load long-context model
-model = AutoModelForCausalLM.from_pretrained(
-    "togethercomputer/LLaMA-2-7B-32K",  # 32k context
-    torch_dtype=torch.float16,
-    device_map="auto"
-)
-tokenizer = AutoTokenizer.from_pretrained("togethercomputer/LLaMA-2-7B-32K")
-
-# Process long document
-long_text = "..." * 30000  # 30k tokens
-inputs = tokenizer(long_text, return_tensors="pt", truncation=False).to('cuda')
-
-# Generate
-outputs = model.generate(
-    **inputs,
-    max_new_tokens=512,
-    temperature=0.7,
-)
-
-response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-```
-
-### Memory Optimization
-
-```python
-# Use gradient checkpointing for fine-tuning
-model.gradient_checkpointing_enable()
-
-# Use Flash Attention 2
-model = AutoModelForCausalLM.from_pretrained(
-    "meta-llama/Llama-2-7b-hf",
-    attn_implementation="flash_attention_2",  # 2-3× faster
-    torch_dtype=torch.float16
-)
-
-# Use paged attention (vLLM)
-from vllm import LLM
-
-llm = LLM(
-    model="togethercomputer/LLaMA-2-7B-32K",
-    max_model_len=32768,  # 32k context
-    gpu_memory_utilization=0.9
-)
-```
+See [references/deployment.md](references/deployment.md) for: Inference with Long Context; Memory Optimization.
 
 ## Resources
 

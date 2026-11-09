@@ -1,7 +1,7 @@
 ---
 name: llamaindex
 description: Data framework for building LLM applications with RAG. Specializes in document ingestion (300+ connectors), indexing, and querying. Features vector indices, query engines, agents, and multi-modal support. Use for document Q&A, chatbots, knowledge retrieval, or building RAG pipelines. Best for data-centric LLM applications.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Agents, LlamaIndex, RAG, Document Ingestion, Vector Indices, Query Engines, Knowledge Retrieval, Data Framework, Multimodal, Private Data, Connectors]
@@ -277,102 +277,11 @@ print(summary.title, summary.main_points)
 
 ## Data ingestion patterns
 
-### Multiple file types
-
-```python
-# Load all supported formats
-documents = SimpleDirectoryReader(
-    "./data",
-    recursive=True,
-    required_exts=[".pdf", ".docx", ".txt", ".md"]
-).load_data()
-```
-
-### Web scraping
-
-```python
-from llama_index.readers.web import BeautifulSoupWebReader
-
-reader = BeautifulSoupWebReader()
-documents = reader.load_data(urls=[
-    "https://docs.python.org/3/tutorial/",
-    "https://docs.python.org/3/library/"
-])
-```
-
-### Database
-
-```python
-from llama_index.readers.database import DatabaseReader
-
-reader = DatabaseReader(
-    sql_database_uri="postgresql://user:pass@localhost/db"
-)
-documents = reader.load_data(query="SELECT * FROM articles")
-```
-
-### API endpoints
-
-```python
-from llama_index.readers.json import JSONReader
-
-reader = JSONReader()
-documents = reader.load_data("https://api.example.com/data.json")
-```
+See the **Data ingestion patterns** section of [references/data_connectors.md](references/data_connectors.md) for: Multiple file types; Web scraping; Database; API endpoints.
 
 ## Vector store integrations
 
-### Chroma (local)
-
-```python
-from llama_index.vector_stores.chroma import ChromaVectorStore
-import chromadb
-
-# Initialize Chroma
-db = chromadb.PersistentClient(path="./chroma_db")
-collection = db.get_or_create_collection("my_collection")
-
-# Create vector store
-vector_store = ChromaVectorStore(chroma_collection=collection)
-
-# Use in index
-from llama_index.core import StorageContext
-storage_context = StorageContext.from_defaults(vector_store=vector_store)
-index = VectorStoreIndex.from_documents(documents, storage_context=storage_context)
-```
-
-### Pinecone (cloud)
-
-```python
-from llama_index.vector_stores.pinecone import PineconeVectorStore
-import pinecone
-
-# Initialize Pinecone
-pinecone.init(api_key="your-key", environment="us-west1-gcp")
-pinecone_index = pinecone.Index("my-index")
-
-# Create vector store
-vector_store = PineconeVectorStore(pinecone_index=pinecone_index)
-storage_context = StorageContext.from_defaults(vector_store=vector_store)
-
-index = VectorStoreIndex.from_documents(documents, storage_context=storage_context)
-```
-
-### FAISS (fast)
-
-```python
-from llama_index.vector_stores.faiss import FaissVectorStore
-import faiss
-
-# Create FAISS index
-d = 1536  # Dimension of embeddings
-faiss_index = faiss.IndexFlatL2(d)
-
-vector_store = FaissVectorStore(faiss_index=faiss_index)
-storage_context = StorageContext.from_defaults(vector_store=vector_store)
-
-index = VectorStoreIndex.from_documents(documents, storage_context=storage_context)
-```
+See [references/vector-stores.md](references/vector-stores.md) for: Chroma (local); Pinecone (cloud); FAISS (fast).
 
 ## Customization
 

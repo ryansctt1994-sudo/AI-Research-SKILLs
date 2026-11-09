@@ -1,7 +1,7 @@
 ---
 name: grpo-rl-training
 description: Expert guidance for GRPO/RL fine-tuning with TRL for reasoning and task-specific model training
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Post-Training, Reinforcement Learning, GRPO, TRL, RLHF, Reward Modeling, Reasoning, DPO, PPO, Structured Output]
@@ -43,7 +43,7 @@ Use GRPO training when you need to:
 - Simpler to implement and debug
 
 **Mathematical Intuition:**
-```
+```text
 For each prompt p:
   1. Generate N completions: {c₁, c₂, ..., cₙ}
   2. Compute rewards: {r₁, r₂, ..., rₙ}
@@ -358,7 +358,7 @@ Key metrics to watch:
 - `kl`: KL divergence from reference (should grow moderately)
 
 **Healthy Training Pattern:**
-```
+```text
 Step   Reward    Reward_Std   KL
 100    0.5       0.3          0.02
 200    0.8       0.25         0.05
@@ -385,98 +385,13 @@ Step   Reward    Reward_Std   KL
 
 ## Advanced Patterns
 
-### 1. Multi-Stage Training
-For complex tasks, train in stages:
-
-```python
-# Stage 1: Format compliance (epochs=1)
-trainer_stage1 = GRPOTrainer(
-    model=model,
-    reward_funcs=[incremental_format_reward, format_reward],
-    ...
-)
-trainer_stage1.train()
-
-# Stage 2: Correctness (epochs=1)
-trainer_stage2 = GRPOTrainer(
-    model=model,
-    reward_funcs=[format_reward, correctness_reward],
-    ...
-)
-trainer_stage2.train()
-```
-
-### 2. Adaptive Reward Scaling
-```python
-class AdaptiveReward:
-    def __init__(self, base_reward_func, initial_weight=1.0):
-        self.func = base_reward_func
-        self.weight = initial_weight
-
-    def __call__(self, *args, **kwargs):
-        rewards = self.func(*args, **kwargs)
-        return [r * self.weight for r in rewards]
-
-    def adjust_weight(self, success_rate):
-        """Increase weight if model struggling, decrease if succeeding."""
-        if success_rate < 0.3:
-            self.weight *= 1.2
-        elif success_rate > 0.8:
-            self.weight *= 0.9
-```
-
-### 3. Custom Dataset Integration
-```python
-def load_custom_knowledge_base(csv_path):
-    """Example: School communication platform docs."""
-    import pandas as pd
-    df = pd.read_csv(csv_path)
-
-    dataset = Dataset.from_pandas(df).map(lambda x: {
-        'prompt': [
-            {'role': 'system', 'content': CUSTOM_SYSTEM_PROMPT},
-            {'role': 'user', 'content': x['question']}
-        ],
-        'answer': x['expert_answer']
-    })
-    return dataset
-```
+See [references/advanced-patterns.md](references/advanced-patterns.md) for: 1. Multi-Stage Training; 2. Adaptive Reward Scaling; 3. Custom Dataset Integration.
 
 ---
 
 ## Deployment and Inference
 
-### Save and Merge LoRA
-```python
-# Merge LoRA adapters into base model
-if hasattr(trainer.model, 'merge_and_unload'):
-    merged_model = trainer.model.merge_and_unload()
-    merged_model.save_pretrained("production_model")
-    tokenizer.save_pretrained("production_model")
-```
-
-### Inference Example
-```python
-from transformers import pipeline
-
-generator = pipeline(
-    "text-generation",
-    model="production_model",
-    tokenizer=tokenizer
-)
-
-result = generator(
-    [
-        {'role': 'system', 'content': SYSTEM_PROMPT},
-        {'role': 'user', 'content': "What is 15 + 27?"}
-    ],
-    max_new_tokens=256,
-    do_sample=True,
-    temperature=0.7,
-    top_p=0.9
-)
-print(result[0]['generated_text'])
-```
+See [references/deployment.md](references/deployment.md) for: Save and Merge LoRA; Inference Example.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: quantizing-models-bitsandbytes
 description: Quantizes LLMs to 8-bit or 4-bit for 50-75% memory reduction with minimal accuracy loss. Use when GPU memory is limited, need to fit larger models, or want faster inference. Supports INT8, NF4, FP4 formats, QLoRA training, and 8-bit optimizers. Works with HuggingFace Transformers.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Optimization, Bitsandbytes, Quantization, 8-Bit, 4-Bit, Memory Optimization, QLoRA, NF4, INT8, HuggingFace, Efficient Inference]
@@ -54,7 +54,7 @@ model = AutoModelForCausalLM.from_pretrained(
 
 Copy this checklist:
 
-```
+```text
 Quantization Loading:
 - [ ] Step 1: Calculate memory requirements
 - [ ] Step 2: Choose quantization level (4-bit or 8-bit)
@@ -65,7 +65,7 @@ Quantization Loading:
 **Step 1: Calculate memory requirements**
 
 Estimate model memory:
-```
+```text
 FP16 memory (GB) = Parameters × 2 bytes / 1e9
 INT8 memory (GB) = Parameters × 1 byte / 1e9
 INT4 memory (GB) = Parameters × 0.5 bytes / 1e9
@@ -140,7 +140,7 @@ QLoRA enables fine-tuning large models on consumer GPUs.
 
 Copy this checklist:
 
-```
+```text
 QLoRA Fine-tuning:
 - [ ] Step 1: Install dependencies
 - [ ] Step 2: Configure 4-bit base model
@@ -231,7 +231,7 @@ model.save_pretrained("./qlora-adapters")
 
 Use 8-bit Adam/AdamW to reduce optimizer memory by 75%.
 
-```
+```text
 8-bit Optimizer Setup:
 - [ ] Step 1: Replace standard optimizer
 - [ ] Step 2: Configure training
@@ -285,7 +285,7 @@ for batch in dataloader:
 **Step 2: Configure training**
 
 Compare memory:
-```
+```text
 Standard AdamW optimizer memory = model_params × 8 bytes (states)
 8-bit AdamW memory = model_params × 2 bytes
 Savings = 75% optimizer memory

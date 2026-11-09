@@ -45,7 +45,7 @@ out = flash_attn_func(q, k, v, dropout_p=0.0, causal=True)
 
 Copy this checklist:
 
-```
+```text
 Flash Attention Integration:
 - [ ] Step 1: Check PyTorch version (≥2.2)
 - [ ] Step 2: Enable Flash Attention backend
@@ -138,7 +138,7 @@ For multi-query attention, sliding window, or H100 FP8.
 
 Copy this checklist:
 
-```
+```text
 flash-attn Library Setup:
 - [ ] Step 1: Install flash-attn library
 - [ ] Step 2: Modify attention code
@@ -228,7 +228,7 @@ print(f"Memory allocated: {torch.cuda.max_memory_allocated()/1e9:.2f}GB")
 
 For maximum performance on H100 GPUs.
 
-```
+```text
 FP8 Setup:
 - [ ] Step 1: Verify H100 GPU available
 - [ ] Step 2: Install flash-attn with FP8 support

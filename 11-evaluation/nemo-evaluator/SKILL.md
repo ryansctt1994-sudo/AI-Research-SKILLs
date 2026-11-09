@@ -1,7 +1,7 @@
 ---
 name: nemo-evaluator-sdk
 description: Evaluates LLMs across 100+ benchmarks from 18+ harnesses (MMLU, HumanEval, GSM8K, safety, VLM) with multi-backend execution. Use when needing scalable evaluation on local Docker, Slurm HPC, or cloud platforms. NVIDIA's enterprise-grade platform with container-first architecture for reproducible benchmarking.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Evaluation, NeMo, NVIDIA, Benchmarking, MMLU, HumanEval, Multi-Backend, Slurm, Docker, Reproducible, Enterprise]
@@ -60,7 +60,7 @@ nemo-evaluator-launcher ls tasks
 Run core academic benchmarks (MMLU, GSM8K, IFEval) on any OpenAI-compatible endpoint.
 
 **Checklist**:
-```
+```text
 Standard Evaluation:
 - [ ] Step 1: Configure API endpoint
 - [ ] Step 2: Select benchmarks
@@ -149,7 +149,7 @@ cat results/<invocation_id>/<task>/artifacts/results.yml
 Execute large-scale evaluation on HPC infrastructure.
 
 **Checklist**:
-```
+```text
 Slurm Evaluation:
 - [ ] Step 1: Configure Slurm settings
 - [ ] Step 2: Set up model deployment
@@ -217,7 +217,7 @@ nemo-evaluator-launcher kill <invocation_id>
 Benchmark multiple models on the same tasks for comparison.
 
 **Checklist**:
-```
+```text
 Model Comparison:
 - [ ] Step 1: Create base config
 - [ ] Step 2: Run evaluations with overrides
@@ -285,7 +285,7 @@ nemo-evaluator-launcher export <invocation_id> --dest wandb
 Evaluate models on safety benchmarks and VLM tasks.
 
 **Checklist**:
-```
+```text
 Safety/VLM Evaluation:
 - [ ] Step 1: Configure safety tasks
 - [ ] Step 2: Set up VLM tasks (if applicable)

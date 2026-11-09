@@ -1,7 +1,7 @@
 ---
 name: distributed-llm-pretraining-torchtitan
 description: Provides PyTorch-native distributed LLM pretraining using torchtitan with 4D parallelism (FSDP2, TP, PP, CP). Use when pretraining Llama 3.1, DeepSeek V3, or custom models at scale from 8 to 512+ GPUs with Float8, torch.compile, and distributed checkpointing.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Model Architecture, Distributed Training, TorchTitan, FSDP2, Tensor Parallel, Pipeline Parallel, Context Parallel, Float8, Llama, Pretraining]
@@ -42,7 +42,7 @@ CONFIG_FILE="./torchtitan/models/llama3/train_configs/llama3_8b.toml" ./run_trai
 
 Copy this checklist:
 
-```
+```text
 Single Node Pretraining:
 - [ ] Step 1: Download tokenizer
 - [ ] Step 2: Configure training
@@ -122,7 +122,7 @@ tensorboard --logdir ./outputs/tb
 
 ### Workflow 2: Multi-node training with SLURM
 
-```
+```text
 Multi-Node Training:
 - [ ] Step 1: Configure parallelism for scale
 - [ ] Step 2: Set up SLURM script
@@ -173,7 +173,7 @@ Training auto-resumes if checkpoint exists in configured folder.
 
 Float8 provides 30-50% speedup on H100 GPUs.
 
-```
+```text
 Float8 Training:
 - [ ] Step 1: Install torchao
 - [ ] Step 2: Configure Float8
@@ -214,7 +214,7 @@ CONFIG_FILE="./llama3_8b.toml" ./run_train.sh \
 
 ### Workflow 4: 4D parallelism for 405B models
 
-```
+```text
 4D Parallelism (FSDP + TP + PP + CP):
 - [ ] Step 1: Create seed checkpoint
 - [ ] Step 2: Configure 4D parallelism

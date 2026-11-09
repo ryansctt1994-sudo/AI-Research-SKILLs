@@ -1,7 +1,7 @@
 ---
 name: fine-tuning-with-trl
 description: Fine-tune LLMs using reinforcement learning with TRL - SFT for instruction tuning, DPO for preference alignment, PPO/GRPO for reward optimization, and reward model training. Use when need RLHF, align model with preferences, or train from human feedback. Works with HuggingFace Transformers.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Post-Training, TRL, Reinforcement Learning, Fine-Tuning, SFT, DPO, PPO, GRPO, RLHF, Preference Alignment, HuggingFace]
@@ -52,7 +52,7 @@ Complete pipeline from base model to human-aligned model.
 
 Copy this checklist:
 
-```
+```text
 RLHF Training:
 - [ ] Step 1: Supervised fine-tuning (SFT)
 - [ ] Step 2: Train reward model
@@ -169,7 +169,7 @@ Align model with preferences without reward model.
 
 Copy this checklist:
 
-```
+```text
 DPO Training:
 - [ ] Step 1: Prepare preference dataset
 - [ ] Step 2: Configure DPO
@@ -251,7 +251,7 @@ Train with reinforcement learning using minimal memory.
 
 Copy this checklist:
 
-```
+```text
 GRPO Training:
 - [ ] Step 1: Define reward function
 - [ ] Step 2: Configure GRPO

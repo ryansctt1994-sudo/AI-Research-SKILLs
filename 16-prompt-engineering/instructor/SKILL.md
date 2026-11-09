@@ -1,7 +1,7 @@
 ---
 name: instructor
 description: Extract structured data from LLM responses with Pydantic validation, retry failed extractions automatically, parse complex JSON with type safety, and stream partial results with Instructor - battle-tested structured output library
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Prompt Engineering, Instructor, Structured Output, Pydantic, Data Extraction, JSON Parsing, Type Safety, Validation, Streaming, OpenAI, Anthropic]
@@ -331,267 +331,15 @@ for task in tasks:
 
 ## Provider Configuration
 
-### Anthropic Claude
-
-```python
-import instructor
-from anthropic import Anthropic
-
-client = instructor.from_anthropic(
-    Anthropic(api_key="your-api-key")
-)
-
-# Use with Claude models
-response = client.messages.create(
-    model="claude-sonnet-4-5-20250929",
-    max_tokens=1024,
-    messages=[...],
-    response_model=YourModel
-)
-```
-
-### OpenAI
-
-```python
-from openai import OpenAI
-
-client = instructor.from_openai(
-    OpenAI(api_key="your-api-key")
-)
-
-response = client.chat.completions.create(
-    model="gpt-4o-mini",
-    response_model=YourModel,
-    messages=[...]
-)
-```
-
-### Local Models (Ollama)
-
-```python
-from openai import OpenAI
-
-# Point to local Ollama server
-client = instructor.from_openai(
-    OpenAI(
-        base_url="http://localhost:11434/v1",
-        api_key="ollama"  # Required but ignored
-    ),
-    mode=instructor.Mode.JSON
-)
-
-response = client.chat.completions.create(
-    model="llama3.1",
-    response_model=YourModel,
-    messages=[...]
-)
-```
+See the **Provider Configuration** section of [references/providers.md](references/providers.md) for: Anthropic Claude; OpenAI; Local Models (Ollama).
 
 ## Common Patterns
 
-### Pattern 1: Data Extraction from Text
-
-```python
-class CompanyInfo(BaseModel):
-    name: str
-    founded_year: int
-    industry: str
-    employees: int
-    headquarters: str
-
-text = """
-Tesla, Inc. was founded in 2003. It operates in the automotive and energy
-industry with approximately 140,000 employees. The company is headquartered
-in Austin, Texas.
-"""
-
-company = client.messages.create(
-    model="claude-sonnet-4-5-20250929",
-    max_tokens=1024,
-    messages=[{
-        "role": "user",
-        "content": f"Extract company information from: {text}"
-    }],
-    response_model=CompanyInfo
-)
-```
-
-### Pattern 2: Classification
-
-```python
-class Category(str, Enum):
-    TECHNOLOGY = "technology"
-    FINANCE = "finance"
-    HEALTHCARE = "healthcare"
-    EDUCATION = "education"
-    OTHER = "other"
-
-class ArticleClassification(BaseModel):
-    category: Category
-    confidence: float = Field(ge=0.0, le=1.0)
-    keywords: list[str]
-
-classification = client.messages.create(
-    model="claude-sonnet-4-5-20250929",
-    max_tokens=1024,
-    messages=[{
-        "role": "user",
-        "content": "Classify this article: [article text]"
-    }],
-    response_model=ArticleClassification
-)
-```
-
-### Pattern 3: Multi-Entity Extraction
-
-```python
-class Person(BaseModel):
-    name: str
-    role: str
-
-class Organization(BaseModel):
-    name: str
-    industry: str
-
-class Entities(BaseModel):
-    people: list[Person]
-    organizations: list[Organization]
-    locations: list[str]
-
-text = "Tim Cook, CEO of Apple, announced at the event in Cupertino..."
-
-entities = client.messages.create(
-    model="claude-sonnet-4-5-20250929",
-    max_tokens=1024,
-    messages=[{
-        "role": "user",
-        "content": f"Extract all entities from: {text}"
-    }],
-    response_model=Entities
-)
-
-for person in entities.people:
-    print(f"{person.name} - {person.role}")
-```
-
-### Pattern 4: Structured Analysis
-
-```python
-class SentimentAnalysis(BaseModel):
-    overall_sentiment: Sentiment
-    positive_aspects: list[str]
-    negative_aspects: list[str]
-    suggestions: list[str]
-    score: float = Field(ge=-1.0, le=1.0)
-
-review = "The product works well but setup was confusing..."
-
-analysis = client.messages.create(
-    model="claude-sonnet-4-5-20250929",
-    max_tokens=1024,
-    messages=[{
-        "role": "user",
-        "content": f"Analyze this review: {review}"
-    }],
-    response_model=SentimentAnalysis
-)
-```
-
-### Pattern 5: Batch Processing
-
-```python
-def extract_person(text: str) -> Person:
-    return client.messages.create(
-        model="claude-sonnet-4-5-20250929",
-        max_tokens=1024,
-        messages=[{
-            "role": "user",
-            "content": f"Extract person from: {text}"
-        }],
-        response_model=Person
-    )
-
-texts = [
-    "John Doe is a 30-year-old engineer",
-    "Jane Smith, 25, works in marketing",
-    "Bob Johnson, age 40, software developer"
-]
-
-people = [extract_person(text) for text in texts]
-```
+See the **Common Patterns** section of [references/examples.md](references/examples.md) for: Pattern 1: Data Extraction from Text; Pattern 2: Classification; Pattern 3: Multi-Entity Extraction; Pattern 4: Structured Analysis; Pattern 5: Batch Processing.
 
 ## Advanced Features
 
-### Union Types
-
-```python
-from typing import Union
-
-class TextContent(BaseModel):
-    type: str = "text"
-    content: str
-
-class ImageContent(BaseModel):
-    type: str = "image"
-    url: HttpUrl
-    caption: str
-
-class Post(BaseModel):
-    title: str
-    content: Union[TextContent, ImageContent]  # Either type
-
-# LLM chooses appropriate type based on content
-```
-
-### Dynamic Models
-
-```python
-from pydantic import create_model
-
-# Create model at runtime
-DynamicUser = create_model(
-    'User',
-    name=(str, ...),
-    age=(int, Field(ge=0)),
-    email=(EmailStr, ...)
-)
-
-user = client.messages.create(
-    model="claude-sonnet-4-5-20250929",
-    max_tokens=1024,
-    messages=[...],
-    response_model=DynamicUser
-)
-```
-
-### Custom Modes
-
-```python
-# For providers without native structured outputs
-client = instructor.from_anthropic(
-    Anthropic(),
-    mode=instructor.Mode.JSON  # JSON mode
-)
-
-# Available modes:
-# - Mode.ANTHROPIC_TOOLS (recommended for Claude)
-# - Mode.JSON (fallback)
-# - Mode.TOOLS (OpenAI tools)
-```
-
-### Context Management
-
-```python
-# Single-use client
-with instructor.from_anthropic(Anthropic()) as client:
-    result = client.messages.create(
-        model="claude-sonnet-4-5-20250929",
-        max_tokens=1024,
-        messages=[...],
-        response_model=YourModel
-    )
-    # Client closed automatically
-```
+See [references/advanced-features.md](references/advanced-features.md) for: Union Types; Dynamic Models; Custom Modes; Context Management.
 
 ## Error Handling
 
@@ -704,25 +452,7 @@ class PartialData(BaseModel):
 
 ## Comparison to Alternatives
 
-| Feature | Instructor | Manual JSON | LangChain | DSPy |
-|---------|------------|-------------|-----------|------|
-| Type Safety | ✅ Yes | ❌ No | ⚠️ Partial | ✅ Yes |
-| Auto Validation | ✅ Yes | ❌ No | ❌ No | ⚠️ Limited |
-| Auto Retry | ✅ Yes | ❌ No | ❌ No | ✅ Yes |
-| Streaming | ✅ Yes | ❌ No | ✅ Yes | ❌ No |
-| Multi-Provider | ✅ Yes | ⚠️ Manual | ✅ Yes | ✅ Yes |
-| Learning Curve | Low | Low | Medium | High |
-
-**When to choose Instructor:**
-- Need structured, validated outputs
-- Want type safety and IDE support
-- Require automatic retries
-- Building data extraction systems
-
-**When to choose alternatives:**
-- DSPy: Need prompt optimization
-- LangChain: Building complex chains
-- Manual: Simple, one-off extractions
+See [references/comparison.md](references/comparison.md).
 
 ## Resources
 

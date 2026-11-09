@@ -1,7 +1,7 @@
 ---
 name: weights-and-biases
 description: Track ML experiments with automatic logging, visualize training in real-time, optimize hyperparameters with sweeps, and manage model registry with W&B - collaborative MLOps platform
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [MLOps, Weights And Biases, WandB, Experiment Tracking, Hyperparameter Tuning, Model Registry, Collaboration, Real-Time Visualization, PyTorch, TensorFlow, HuggingFace]
@@ -221,156 +221,11 @@ wandb.log_artifact(artifact)
 
 ## Hyperparameter Sweeps
 
-Automatically search for optimal hyperparameters.
-
-### Define Sweep Configuration
-
-```python
-sweep_config = {
-    'method': 'bayes',  # or 'grid', 'random'
-    'metric': {
-        'name': 'val/accuracy',
-        'goal': 'maximize'
-    },
-    'parameters': {
-        'learning_rate': {
-            'distribution': 'log_uniform',
-            'min': 1e-5,
-            'max': 1e-1
-        },
-        'batch_size': {
-            'values': [16, 32, 64, 128]
-        },
-        'optimizer': {
-            'values': ['adam', 'sgd', 'rmsprop']
-        },
-        'dropout': {
-            'distribution': 'uniform',
-            'min': 0.1,
-            'max': 0.5
-        }
-    }
-}
-
-# Initialize sweep
-sweep_id = wandb.sweep(sweep_config, project="my-project")
-```
-
-### Define Training Function
-
-```python
-def train():
-    # Initialize run
-    run = wandb.init()
-
-    # Access sweep parameters
-    lr = wandb.config.learning_rate
-    batch_size = wandb.config.batch_size
-    optimizer_name = wandb.config.optimizer
-
-    # Build model with sweep config
-    model = build_model(wandb.config)
-    optimizer = get_optimizer(optimizer_name, lr)
-
-    # Training loop
-    for epoch in range(NUM_EPOCHS):
-        train_loss = train_epoch(model, optimizer, batch_size)
-        val_acc = validate(model)
-
-        # Log metrics
-        wandb.log({
-            "train/loss": train_loss,
-            "val/accuracy": val_acc
-        })
-
-# Run sweep
-wandb.agent(sweep_id, function=train, count=50)  # Run 50 trials
-```
-
-### Sweep Strategies
-
-```python
-# Grid search - exhaustive
-sweep_config = {
-    'method': 'grid',
-    'parameters': {
-        'lr': {'values': [0.001, 0.01, 0.1]},
-        'batch_size': {'values': [16, 32, 64]}
-    }
-}
-
-# Random search
-sweep_config = {
-    'method': 'random',
-    'parameters': {
-        'lr': {'distribution': 'uniform', 'min': 0.0001, 'max': 0.1},
-        'dropout': {'distribution': 'uniform', 'min': 0.1, 'max': 0.5}
-    }
-}
-
-# Bayesian optimization (recommended)
-sweep_config = {
-    'method': 'bayes',
-    'metric': {'name': 'val/loss', 'goal': 'minimize'},
-    'parameters': {
-        'lr': {'distribution': 'log_uniform', 'min': 1e-5, 'max': 1e-1}
-    }
-}
-```
+See the **Hyperparameter Sweeps** section of [references/sweeps.md](references/sweeps.md) for: Define Sweep Configuration; Define Training Function; Sweep Strategies.
 
 ## Artifacts
 
-Track datasets, models, and other files with lineage.
-
-### Log Artifacts
-
-```python
-# Create artifact
-artifact = wandb.Artifact(
-    name='training-dataset',
-    type='dataset',
-    description='ImageNet training split',
-    metadata={'size': '1.2M images', 'split': 'train'}
-)
-
-# Add files
-artifact.add_file('data/train.csv')
-artifact.add_dir('data/images/')
-
-# Log artifact
-wandb.log_artifact(artifact)
-```
-
-### Use Artifacts
-
-```python
-# Download and use artifact
-run = wandb.init(project="my-project")
-
-# Download artifact
-artifact = run.use_artifact('training-dataset:latest')
-artifact_dir = artifact.download()
-
-# Use the data
-data = load_data(f"{artifact_dir}/train.csv")
-```
-
-### Model Registry
-
-```python
-# Log model as artifact
-model_artifact = wandb.Artifact(
-    name='resnet50-model',
-    type='model',
-    metadata={'architecture': 'ResNet50', 'accuracy': 0.95}
-)
-
-model_artifact.add_file('model.pth')
-wandb.log_artifact(model_artifact, aliases=['best', 'production'])
-
-# Link to model registry
-run.link_artifact(model_artifact, 'model-registry/production-models')
-```
+See the **Artifacts** section of [references/artifacts.md](references/artifacts.md) for: Log Artifacts; Use Artifacts; Model Registry.
 
 ## Integration Examples
 

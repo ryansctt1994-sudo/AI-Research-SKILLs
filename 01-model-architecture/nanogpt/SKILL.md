@@ -1,7 +1,7 @@
 ---
 name: nanogpt
 description: Educational GPT implementation in ~300 lines. Reproduces GPT-2 (124M) on OpenWebText. Clean, hackable code for learning transformers. By Andrej Karpathy. Perfect for understanding GPT architecture from scratch. Train on Shakespeare (CPU) or OpenWebText (multi-GPU).
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Model Architecture, NanoGPT, GPT-2, Educational, Andrej Karpathy, Transformer, Minimalist, From Scratch, Training]
@@ -32,7 +32,7 @@ python sample.py --out_dir=out-shakespeare-char
 ```
 
 **Output**:
-```
+```text
 ROMEO:
 What say'st thou? Shall I speak, and be a man?
 

@@ -1,7 +1,7 @@
 ---
 name: autogpt-agents
 description: Autonomous AI agent platform for building and deploying continuous agents. Use when creating visual workflow agents, deploying persistent autonomous agents, or building complex multi-step AI automation systems.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Agents, AutoGPT, Autonomous Agents, Workflow Automation, Visual Builder, AI Platform]
@@ -83,7 +83,7 @@ AutoGPT has two main systems:
 
 Agents are represented as **graphs** containing **nodes** connected by **links**:
 
-```
+```text
 Graph (Agent)
   ├── Node (Input)
   │   └── Block (AgentInputBlock)
@@ -110,7 +110,7 @@ Blocks are reusable functional components:
 
 ### Execution flow
 
-```
+```text
 User/Trigger → Graph Execution → Node Execution → Block.execute()
      ↓              ↓                 ↓
   Inputs      Queue System      Output Yields
@@ -213,7 +213,7 @@ cd classic
 
 ### Agent structure
 
-```
+```text
 my-agent/
 ├── agent.py          # Main agent logic
 ├── abilities/        # Custom abilities

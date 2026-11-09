@@ -1,7 +1,7 @@
 ---
 name: lambda-labs-gpu-cloud
 description: Reserved and on-demand GPU cloud instances for ML training and inference. Use when you need dedicated GPU instances with simple SSH access, persistent filesystems, or high-performance multi-node clusters for large-scale training.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Infrastructure, GPU Cloud, Training, Inference, Lambda Labs]
@@ -82,7 +82,7 @@ ssh -i ~/.ssh/lambda_key ubuntu@<INSTANCE-IP>
 
 ### Instance configurations
 
-```
+```text
 8x GPU: Best for distributed training (DDP, FSDP)
 4x GPU: Large models, multi-GPU training
 2x GPU: Medium workloads
@@ -215,34 +215,7 @@ api.delete_ssh_key(key_id)
 
 ## CLI with curl
 
-### List instance types
-
-```bash
-curl -u $LAMBDA_API_KEY: \
-  https://cloud.lambdalabs.com/api/v1/instance-types | jq
-```
-
-### Launch instance
-
-```bash
-curl -u $LAMBDA_API_KEY: \
-  -X POST https://cloud.lambdalabs.com/api/v1/instance-operations/launch \
-  -H "Content-Type: application/json" \
-  -d '{
-    "region_name": "us-west-1",
-    "instance_type_name": "gpu_1x_h100_sxm5",
-    "ssh_key_names": ["my-key"]
-  }' | jq
-```
-
-### Terminate instance
-
-```bash
-curl -u $LAMBDA_API_KEY: \
-  -X POST https://cloud.lambdalabs.com/api/v1/instance-operations/terminate \
-  -H "Content-Type: application/json" \
-  -d '{"instance_ids": ["<INSTANCE-ID>"]}' | jq
-```
+See the **CLI with curl** section of [references/advanced-usage.md](references/advanced-usage.md) for: List instance types; Launch instance; Terminate instance.
 
 ## Persistent storage
 
@@ -409,56 +382,11 @@ torch.save({
 
 ## 1-Click Clusters
 
-### Overview
-
-High-performance Slurm clusters with:
-- 16-512 NVIDIA H100 or B200 GPUs
-- NVIDIA Quantum-2 400 Gb/s InfiniBand
-- GPUDirect RDMA at 3200 Gb/s
-- Pre-installed distributed ML stack
-
-### Included software
-
-- Ubuntu 22.04 LTS + Lambda Stack
-- NCCL, Open MPI
-- PyTorch with DDP and FSDP
-- TensorFlow
-- OFED drivers
-
-### Storage
-
-- 24 TB NVMe per compute node (ephemeral)
-- Lambda filesystems for persistent data
-
-### Multi-node training
-
-```bash
-# On Slurm cluster
-srun --nodes=4 --ntasks-per-node=8 --gpus-per-node=8 \
-  torchrun --nnodes=4 --nproc_per_node=8 \
-  --rdzv_backend=c10d --rdzv_endpoint=$MASTER_ADDR:29500 \
-  train.py
-```
+See the **1-Click Clusters** section of [references/advanced-usage.md](references/advanced-usage.md) for: Overview; Included software; Storage; Multi-node training.
 
 ## Networking
 
-### Bandwidth
-
-- Inter-instance (same region): up to 200 Gbps
-- Internet outbound: 20 Gbps max
-
-### Firewall
-
-- Default: Only port 22 (SSH) open
-- Configure additional ports in Lambda console
-- ICMP traffic allowed by default
-
-### Private IPs
-
-```bash
-# Find private IP
-ip addr show | grep 'inet '
-```
+See the **Networking** section of [references/advanced-usage.md](references/advanced-usage.md) for: Bandwidth; Firewall; Private IPs.
 
 ## Common workflows
 

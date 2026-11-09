@@ -1,7 +1,7 @@
 ---
 name: evaluating-code-models
 description: Evaluates code generation models across HumanEval, MBPP, MultiPL-E, and 15+ benchmarks with pass@k metrics. Use when benchmarking code models, comparing coding abilities, testing multi-language support, or measuring code generation quality. Industry standard from BigCode Project used by HuggingFace leaderboards.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Evaluation, Code Generation, HumanEval, MBPP, MultiPL-E, Pass@k, BigCode, Benchmarking, Code Models]
@@ -47,7 +47,7 @@ python -c "from bigcode_eval.tasks import ALL_TASKS; print(ALL_TASKS)"
 Evaluate model on core code benchmarks (HumanEval, MBPP, HumanEval+).
 
 **Checklist**:
-```
+```text
 Code Benchmark Evaluation:
 - [ ] Step 1: Choose benchmark suite
 - [ ] Step 2: Configure model and generation
@@ -139,7 +139,7 @@ Results in `results/starcoder2-humaneval.json`:
 Evaluate code generation across 18 programming languages.
 
 **Checklist**:
-```
+```text
 Multi-Language Evaluation:
 - [ ] Step 1: Generate solutions (host machine)
 - [ ] Step 2: Run evaluation in Docker (safe execution)
@@ -185,7 +185,7 @@ docker run -v $(pwd)/generations_multi.json:/app/generations.json:ro \
 Evaluate chat/instruction models with proper formatting.
 
 **Checklist**:
-```
+```text
 Instruction Model Evaluation:
 - [ ] Step 1: Use instruction-tuned tasks
 - [ ] Step 2: Configure instruction tokens

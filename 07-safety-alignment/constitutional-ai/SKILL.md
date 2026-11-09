@@ -21,7 +21,7 @@ Constitutional AI (CAI) trains models to be harmless through self-critique and A
 2. **Reinforcement Learning (RL)**: RLAIF (RL from AI Feedback)
 
 **Constitution example**:
-```
+```text
 Principles:
 1. Choose the response that is most helpful, honest, and harmless
 2. Avoid responses that are toxic, racist, or sexist
@@ -222,7 +222,7 @@ cot_critiques = generator(
 **Issue: Model refuses too much (evasive)**
 
 Add constitution principle:
-```
+```text
 Prefer responses that engage thoughtfully with questions rather than
 refusing to answer. Explain concerns while still being helpful.
 ```
@@ -230,7 +230,7 @@ refusing to answer. Explain concerns while still being helpful.
 **Issue: Self-critiques are weak**
 
 Use stronger critique prompts:
-```
+```text
 Critically analyze this response for ANY potential issues, however minor.
 Be thorough and specific in identifying problems.
 ```

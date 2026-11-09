@@ -64,7 +64,7 @@ python3 -m verl.trainer.main_ppo \
 
 verl uses a **HybridFlow** programming model separating control flow from computation:
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │ Single-Process Controller (Ray)                         │
 │ - Orchestrates: rollout → reward → train → sync        │
