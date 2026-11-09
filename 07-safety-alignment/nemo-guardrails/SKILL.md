@@ -265,9 +265,9 @@ async def strict_fact_check(context):
 
 ## Advanced topics
 
-**Colang 2.0 DSL**: See the [Colang 2.0 guide](https://docs.nvidia.com/nemo/guardrails/latest/colang-2/overview.html) for flow syntax, actions, variables, and advanced patterns.
+**Colang 2.0 DSL**: See the [Colang 2.0 guide](https://docs.nvidia.com/nemo/guardrails/colang-2/overview.html) for flow syntax, actions, variables, and advanced patterns.
 
-**Integration guide**: See the [guardrails library docs](https://docs.nvidia.com/nemo/guardrails/latest/user-guides/guardrails-library.html) for LlamaGuard, Presidio, ActiveFence, and custom models.
+**Integration guide**: See the [guardrails library docs](https://docs.nvidia.com/nemo/guardrails/user-guides/guardrails-library.html) for LlamaGuard, Presidio, ActiveFence, and custom models.
 
 **Performance optimization**: See the [NeMo Guardrails documentation](https://docs.nvidia.com/nemo/guardrails/latest/index.html) for latency reduction, caching, and batching strategies.
 

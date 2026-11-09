@@ -379,7 +379,7 @@ dataloader = DataLoader(dataset, num_workers=8)
 
 **Hyperparameter tuning**: See the [Ray Tune documentation](https://docs.ray.io/en/latest/tune/index.html) for Ray Tune integration, search algorithms (Optuna, HyperOpt), and population-based training.
 
-**Custom training loops**: See the [Ray Train user guides](https://docs.ray.io/en/latest/train/user-guides.html) for advanced Ray Train usage, custom backends, and integration with other frameworks.
+**Custom training loops**: See the [Ray Train user guides](https://docs.ray.io/en/latest/train/user-guides/index.html) for advanced Ray Train usage, custom backends, and integration with other frameworks.
 
 ## Hardware requirements
 
