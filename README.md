@@ -429,7 +429,7 @@ We welcome contributions from the AI research community! See [CONTRIBUTING.md](C
 - Quality standards and best practices
 - Submission process
 
-All contributors are featured in our [Contributors Hall of Fame](CONTRIBUTORS.md) 🌟
+All contributors are featured in our [Contributors Hall of Fame](https://github.com/Orchestra-Research/AI-research-SKILLs/graphs/contributors) 🌟
  
 
 ## Recent Updates

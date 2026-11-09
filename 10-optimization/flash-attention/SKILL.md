@@ -1,7 +1,7 @@
 ---
 name: optimizing-attention-flash
 description: Optimizes transformer attention with Flash Attention for 2-4x speedup and 10-20x memory reduction. Use when training/running transformers with long sequences (>512 tokens), encountering GPU memory issues with attention, or need faster inference. Supports PyTorch native SDPA, flash-attn library, H100 FP8, and sliding window attention.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Optimization, Flash Attention, Attention Optimization, Memory Efficiency, Speed Optimization, Long Context, PyTorch, SDPA, H100, FP8, Transformers]
@@ -342,9 +342,9 @@ Flash Attention uses float16/bfloat16 for speed. Float32 not supported.
 
 **Performance benchmarks**: See [references/benchmarks.md](references/benchmarks.md) for detailed speed and memory comparisons across GPUs and sequence lengths.
 
-**Algorithm details**: See [references/algorithm.md](references/algorithm.md) for tiling strategy, recomputation, and IO complexity analysis.
+**Algorithm details**: See the [FlashAttention-2 paper](https://arxiv.org/abs/2307.08691) for tiling strategy, recomputation, and IO complexity analysis.
 
-**Advanced features**: See [references/advanced-features.md](references/advanced-features.md) for rotary embeddings, ALiBi, paged KV cache, and custom attention masks.
+**Advanced features**: See the [flash-attention repository](https://github.com/Dao-AILab/flash-attention) for rotary embeddings, ALiBi, paged KV cache, and custom attention masks.
 
 ## Hardware requirements
 

@@ -1,7 +1,7 @@
 ---
 name: mamba-architecture
 description: State-space model with O(n) complexity vs Transformers' O(n²). 5× faster inference, million-token sequences, no KV cache. Selective SSM with hardware-aware design. Mamba-1 (d_state=16) and Mamba-2 (d_state=128, multi-head). Models 130M-2.8B on HuggingFace.
-version: 1.0.0
+version: 1.0.1
 author: Orchestra Research
 license: MIT
 tags: [Model Architecture, Mamba, State Space Models, SSM, Linear Complexity, Long Context, Efficient Inference, Hardware-Aware, Alternative To Transformers]
@@ -226,11 +226,11 @@ model = MambaLMHeadModel.from_pretrained("state-spaces/mamba-2.8b")
 
 ## Advanced topics
 
-**Selective SSM**: See [references/selective-ssm.md](references/selective-ssm.md) for mathematical formulation, state-space equations, and how selectivity enables O(n) complexity.
+**Selective SSM & block structure**: See [references/architecture-details.md](references/architecture-details.md) for the selective state-space mechanism, Mamba block structure, and hardware-aware (parallel vs. sequential) implementation.
 
-**Mamba-2 architecture**: See [references/mamba2-details.md](references/mamba2-details.md) for multi-head structure, tensor parallelism, and distributed training setup.
+**Training & distributed setup**: See [references/training-guide.md](references/training-guide.md) for training from scratch, distributed training, and mixed precision.
 
-**Performance optimization**: See [references/performance.md](references/performance.md) for hardware-aware design, CUDA kernels, and memory efficiency techniques.
+**Performance benchmarks**: See [references/benchmarks.md](references/benchmarks.md) for inference speed, memory usage, throughput, and scaling comparisons.
 
 ## Hardware requirements
 
