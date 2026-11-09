@@ -1,18 +1,50 @@
-# Offline skill-catalog validation scope
+# Offline skill-catalog integrity and installer regression checks
 
-This draft builds on the existing unmerged reference-link repair PR #1.
-The library has **83 checked-in SKILL.md documents** in 20 categories.
-Previously the npm installer's category counts summed to 85, its banner
-defaulted to 82, and four selection paths did not exist. This candidate
-aligns counts and paths to the source tree.
+This document describes the repository's **ongoing source-tree checks**, not
+the status of an individual pull request. The current results and exact commit
+under test are recorded in GitHub Actions.
 
-The new pull-request-only CI validates local references, metadata and
-marketplace membership without fetching research websites, publishing
-packages, invoking LLMs or running model/tool training. The Node tests also
-check every quick-start and individual installer path, category counts and
-marketplace parity.
+## Source of truth
 
-**This does not verify:** accuracy of technical claims within any skill,
-framework versions, model-training recipes, external links, installer effects
-on actual user machines, or safety of commands suggested in skills. Publishing
-and the existing synchronization workflow stay outside this review.
+- Skill directories contain `SKILL.md` files beneath numbered category folders.
+- `.claude-plugin/marketplace.json` lists which skill directories are advertised.
+- `packages/ai-research-skills/src/prompts.js` contains the installer's category,
+  individual-skill, and quick-start selections.
+- `packages/ai-research-skills/src/agents.js` lists supported coding agents.
+
+Catalog counts and selectable paths should agree with the checked-in tree.
+Any changing count belongs in generated test output rather than a permanent
+claim of this document.
+
+## Automated checks
+
+`.github/workflows/skill-catalog-integrity.yml` runs on pull requests targeting
+`main` and can also be dispatched manually. Its two jobs are read-only:
+
+1. **Offline source integrity:** `python scripts/check_skills.py` checks
+   marketplace membership, duplicate entries, basic `SKILL.md` frontmatter
+   fields, local Markdown link targets in `SKILL.md`, the 500-line limit for
+   `SKILL.md`, and language/info tags on its fenced code blocks.
+   `python -m unittest discover -s tests -p 'test_*.py' -v` exercises the
+   checker's positive and negative fixtures.
+2. **npm installer regression:** from `packages/ai-research-skills`, install
+   locked dependencies using `npm ci --ignore-scripts`, check CLI syntax
+   with `node --check`, and run `npm test` for catalog paths, argument
+   parsing, agent detection, and other package regressions.
+
+The source checks do not execute a skill, synchronize skills into users'
+installations, publish npm packages, or run AI models or training jobs.
+
+## Limits and review requirements
+
+These checks do **not** establish that instructions in the skills are accurate,
+secure, current, or appropriate for any specific environment. The Python
+link checker examines local Markdown links in each `SKILL.md`; it does not
+currently walk nested `references/` documents, validate Markdown image
+links, or fetch external URLs. Basic frontmatter-field checks are not a
+complete semantic validation of the metadata schema. Test success is not
+proof of real-machine installer behavior or npm release readiness.
+
+For a release or merge decision, review the **exact head commit** and its
+workflow logs, separately assess the content and any external dependencies,
+and follow the repository's own review and release procedures.
